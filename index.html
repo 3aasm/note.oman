@@ -1,0 +1,2668 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مذكرتي الشخصية المتطورة</title>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" as="style">
+  <!-- خطوط إضافية -->
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&family=Dancing+Script:wght@700&family=Amiri:wght@400;700&family=Almarai:wght@300;400;700&family=Cairo:wght@300;400;600;700&family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;600;700&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;500;700&family=Poppins:wght@300;400;500;700&family=Fira+Sans:wght@300;400;500;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+  <!-- أيقونات Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Base Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Tajawal', Arial, sans-serif; line-height: 1.6; color: var(--text-color); background-color: var(--bg); overflow-x: hidden; transition: background-color 0.3s, color 0.3s; }
+
+    /* Color Palette - Light Mode */
+    :root {
+      --primary: #8B4513;
+      --primary-light: #D2B48C;
+      --accent: #F5F5DC;
+      --bg: #FFFFFF;
+      --text-color: #333;
+      --card-bg: #F5F5DC;
+      --toolbar-bg: #FFFFFF;
+      --editor-bg: #FFFFFF;
+      --modal-bg: #FFFFFF;
+      --menu-bg: #FFFFFF;
+      --pinned-color: #FFD700;
+      --success-color: #4CAF50;
+      --error-color: #f44336;
+      --checkbox-color: #8B4513;
+      --clock-bg: #f0f0f0;
+      --clock-text: #333;
+      --game-bg: #f8f9fa;
+    }
+
+    /* Dark Mode */
+    .dark-mode {
+      --primary: #D2B48C;
+      --primary-light: #8B4513;
+      --accent: #2D2D2D;
+      --bg: #121212;
+      --text-color: #E0E0E0;
+      --card-bg: #2D2D2D;
+      --toolbar-bg: #1E1E1E;
+      --editor-bg: #1E1E1E;
+      --modal-bg: #2D2D2D;
+      --menu-bg: #2D2D2D;
+      --pinned-color: #FFC600;
+      --success-color: #388E3C;
+      --error-color: #D32F2F;
+      --checkbox-color: #D2B48C;
+      --clock-bg: #2a2a2a;
+      --clock-text: #E0E0E0;
+      --game-bg: #1a1a1a;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(-50px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
+    }
+
+    /* Header & Nav */
+    header { 
+      background-color: var(--primary); 
+      padding: 1rem 2rem; 
+      color: #fff; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      animation: fadeIn 0.5s ease-out;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo { 
+      font-size: 1.5rem; 
+      font-weight: bold; 
+      font-family: 'Dancing Script', cursive;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .logo-icon {
+      font-size: 1.8rem;
+    }
+    nav ul { list-style: none; display: flex; gap: 1rem; }
+    nav a { color: #fff; text-decoration: none; font-weight: 500; padding: 0.5rem 1rem; border-radius: 5px; transition: all 0.3s; }
+    nav a:hover, nav a.active { background-color: rgba(255,255,255,0.2); text-decoration: none; }
+
+    /* Play Button */
+    .play-btn {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      margin-left: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      border: 1px solid white;
+    }
+
+    .play-btn:hover {
+      background-color: var(--accent);
+      color: var(--primary);
+      transform: scale(1.05);
+    }
+
+    /* Header Controls */
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* Notebooks Counter */
+    .notebooks-counter {
+      background-color: rgba(255, 255, 255, 0.2);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      margin-left: 1rem;
+    }
+
+    /* Language Switch */
+    .lang-switch button { 
+      background: transparent; 
+      border: 1px solid #fff; 
+      color: #fff; 
+      padding: 0.3rem 0.6rem; 
+      margin-left: 0.5rem; 
+      cursor: pointer; 
+      border-radius: 0.25rem; 
+      transition: all 0.3s;
+    }
+    .lang-switch button:hover, .lang-switch button.active { 
+      background-color: var(--accent); 
+      color: var(--primary); 
+    }
+
+    /* Dark Mode Toggle */
+    .dark-mode-toggle {
+      background: transparent;
+      border: 1px solid #fff;
+      color: #fff;
+      padding: 0.3rem 0.6rem;
+      cursor: pointer;
+      border-radius: 0.25rem;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .dark-mode-toggle:hover {
+      background-color: var(--accent);
+      color: var(--primary);
+    }
+
+    /* Clock Widget */
+    .clock-widget {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background-color: var(--clock-bg);
+      color: var(--clock-text);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .clock-widget:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .clock-time {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .clock-date {
+      font-size: 0.8rem;
+      margin-top: 0.2rem;
+    }
+
+    .clock-settings {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: var(--modal-bg);
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      width: 200px;
+      z-index: 1001;
+    }
+
+    .clock-widget.active .clock-settings {
+      display: block;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .clock-settings label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .clock-settings select {
+      width: 100%;
+      padding: 0.3rem;
+      margin-bottom: 1rem;
+      background-color: var(--bg);
+      color: var(--text-color);
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+    }
+
+    /* Main Title */
+    .main-title {
+      text-align: center;
+      margin: 2rem 0;
+      font-family: 'Dancing Script', cursive;
+      font-size: 3.5rem;
+      color: var(--primary);
+      animation: slideIn 0.8s ease-out;
+      position: relative;
+    }
+
+    .main-title::after {
+      content: '';
+      display: block;
+      width: 100px;
+      height: 3px;
+      background: var(--primary);
+      margin: 0.5rem auto;
+      border-radius: 3px;
+    }
+
+    /* Notebooks Grid */
+    .notebooks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .notebook-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      animation: fadeIn 0.5s ease-out;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      position: relative;
+      border: 2px solid transparent;
+      display: flex;
+      flex-direction: column;
+      min-height: 200px;
+    }
+
+    .notebook-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+
+    .notebook-card.pinned {
+      border-color: var(--pinned-color);
+      box-shadow: 0 4px 8px rgba(255, 215, 0, 0.3);
+    }
+
+    .notebook-card.pinned::after {
+      content: '📌';
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      font-size: 1.2rem;
+    }
+
+    .notebook-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: auto;
+      padding-top: 1rem;
+    }
+
+    .notebook-btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+      font-size: 0.9rem;
+    }
+
+    .add-btn {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .delete-btn {
+      background-color: var(--error-color);
+      color: white;
+    }
+
+    .pin-btn {
+      background-color: var(--pinned-color);
+      color: #333;
+    }
+
+    /* Notebook Rating */
+    .notebook-rating {
+      margin: 0.5rem 0;
+      color: var(--pinned-color);
+      font-size: 1.2rem;
+    }
+
+    .star {
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .star:hover {
+      transform: scale(1.2);
+    }
+
+    /* Add Notebook Button */
+    .add-notebook-container {
+      display: flex;
+      justify-content: center;
+      margin: 2rem 0;
+    }
+
+    .add-notebook-btn {
+      background-color: var(--primary);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .add-notebook-btn:hover {
+      background-color: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      animation: pulse 1s infinite;
+    }
+
+    /* Notebook Menu */
+    .notebook-menu {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 0.3rem;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      color: var(--text-color);
+    }
+
+    .notebook-menu:hover {
+      background-color: rgba(0,0,0,0.1);
+    }
+
+    .menu-dropdown {
+      position: absolute;
+      top: 35px;
+      left: 0;
+      background: var(--menu-bg);
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      z-index: 10;
+      display: none;
+      min-width: 120px;
+    }
+
+    .menu-dropdown.show {
+      display: block;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    .menu-dropdown button {
+      width: 100%;
+      text-align: right;
+      padding: 0.5rem 1rem;
+      border: none;
+      background: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--text-color);
+    }
+
+    .menu-dropdown button:hover {
+      background-color: var(--accent);
+    }
+
+    /* Back Button */
+    .back-btn {
+      background-color: var(--primary);
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 1rem 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .back-btn:hover {
+      background-color: var(--primary-light);
+      transform: translateY(-2px);
+    }
+
+    /* Auto-save Indicator */
+    .auto-save-indicator {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: var(--success-color);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .auto-save-indicator.show {
+      opacity: 1;
+    }
+
+    /* Rename Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: var(--modal-bg);
+      padding: 2rem;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      animation: scaleIn 0.3s ease-out;
+      color: var(--text-color);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .modal-title {
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+      text-align: center;
+      font-size: 1.5rem;
+    }
+
+    .modal-input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid var(--accent);
+      border-radius: 5px;
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+      background-color: var(--bg);
+      color: var(--text-color);
+      transition: border-color 0.3s;
+    }
+
+    .modal-input:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .modal-btn {
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+      min-width: 100px;
+    }
+
+    .modal-btn.confirm {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .modal-btn.confirm:hover {
+      background-color: var(--primary-light);
+    }
+
+    .modal-btn.cancel {
+      background-color: var(--accent);
+      color: var(--text-color);
+    }
+
+    .modal-btn.cancel:hover {
+      background-color: var(--text-color);
+      color: var(--bg);
+    }
+
+    /* Editor Section */
+    .editor-container {
+      display: none;
+      animation: scaleIn 0.5s ease-out;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .editor { 
+      margin: 2rem auto; 
+      background: var(--accent); 
+      padding: 1rem; 
+      border-radius: 0.5rem; 
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .toolbar { 
+      background: var(--toolbar-bg); 
+      padding: 0.8rem; 
+      border-bottom: 1px solid var(--accent); 
+      display: flex; 
+      gap: 0.8rem; 
+      flex-wrap: wrap; 
+      align-items: center; 
+      border-radius: 0.5rem 0.5rem 0 0;
+    }
+
+    .toolbar button, 
+    .toolbar select, 
+    .toolbar input[type="color"] { 
+      padding: 0.5rem 0.8rem; 
+      border: none; 
+      background: var(--primary-light); 
+      cursor: pointer; 
+      border-radius: 0.25rem; 
+      font-size: 1rem; 
+      color: var(--text-color); 
+      transition: all 0.2s;
+    }
+
+    .toolbar button:hover, 
+    .toolbar select:hover, 
+    .toolbar input[type="color"]:hover { 
+      background: var(--primary); 
+      color: #fff; 
+      transform: scale(1.05);
+    }
+
+    #editor-area { 
+      min-height: 500px; 
+      padding: 1.5rem; 
+      background: var(--editor-bg); 
+      border-radius: 0 0 0.5rem 0.5rem; 
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+      outline: none; 
+      font-size: 1.1rem;
+      line-height: 1.8;
+      resize: both;
+      overflow: auto;
+      min-width: 300px;
+      max-height: 80vh;
+      color: var(--text-color);
+    }
+
+    /* Font Size Slider */
+    .font-size-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .font-size-slider {
+      width: 100px;
+    }
+
+    .font-size-value {
+      min-width: 30px;
+      text-align: center;
+    }
+
+    /* Footer */
+    footer { 
+      background: var(--primary); 
+      color: #fff; 
+      text-align: center; 
+      padding: 1.5rem; 
+      margin-top: 2rem; 
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    footer p { 
+      font-size: 0.9rem; 
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--success-color);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 5px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
+
+    .toast.error {
+      background-color: var(--error-color);
+    }
+
+    /* Loading Spinner */
+    .spinner {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .spinner-inner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: var(--primary);
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Checkbox styles for tasks */
+    .task-checkbox {
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
+      margin: 0.5rem 0;
+    }
+
+    .task-checkbox input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--checkbox-color);
+      border-radius: 50%;
+      outline: none;
+      cursor: pointer;
+      margin-left: 8px;
+      position: relative;
+      transition: all 0.3s;
+    }
+
+    .task-checkbox input[type="checkbox"]:checked {
+      background-color: var(--checkbox-color);
+    }
+
+    .task-checkbox input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      color: white;
+      font-size: 14px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Search modal */
+    .search-modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: var(--modal-bg);
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      z-index: 1001;
+      width: 90%;
+      max-width: 500px;
+    }
+
+    .search-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .search-input-container {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 0.5rem;
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      background-color: var(--bg);
+      color: var(--text-color);
+    }
+
+    .search-results {
+      max-height: 300px;
+      overflow-y: auto;
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      padding: 0.5rem;
+      background-color: var(--bg);
+    }
+
+    .search-result-item {
+      padding: 0.5rem;
+      border-bottom: 1px solid var(--accent);
+      cursor: pointer;
+    }
+
+    .search-result-item:hover {
+      background-color: var(--accent);
+    }
+
+    .search-result-item.highlight {
+      background-color: rgba(139, 69, 19, 0.2);
+    }
+
+    .search-nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    /* Games Page */
+    .games-page {
+      display: none;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      min-height: 80vh;
+    }
+
+    .games-title {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-family: 'Dancing Script', cursive;
+      font-size: 3rem;
+      color: var(--primary);
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .game-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border: 2px solid var(--primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .game-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+
+    .game-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    .game-name {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    .game-desc {
+      font-size: 1rem;
+      color: var(--text-color);
+      margin-bottom: 1.5rem;
+    }
+
+    .play-btn-game {
+      background-color: var(--primary);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: auto;
+    }
+
+    .play-btn-game:hover {
+      background-color: var(--primary-light);
+      transform: translateY(-2px);
+    }
+
+    /* Game Container */
+    .game-container {
+      display: none;
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+      min-height: 80vh;
+    }
+
+    .game-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .game-title {
+      font-size: 2rem;
+      color: var(--primary);
+      font-family: 'Dancing Script', cursive;
+    }
+
+    /* XO Game */
+    .xo-container {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .xo-header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .xo-header h1 { 
+      margin: 0; 
+      font-size: 2.5em; 
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    #xo-scoreboard {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      background: var(--card-bg);
+      color: var(--text-color);
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      text-align: center;
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+
+    #xo-gameOptions {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #xo-gameOptions label { 
+      margin-right: 5px; 
+      color: var(--text-color);
+    }
+
+    #xo-gameOptions select {
+      padding: 5px;
+      font-size: 1em;
+      margin: 0 10px;
+      background: var(--bg);
+      color: var(--text-color);
+      border: 1px solid var(--accent);
+    }
+
+    #xo-status { 
+      text-align: center; 
+      font-size: 1.5em; 
+      margin-bottom: 20px; 
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .xo-board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      background: var(--card-bg);
+      padding: 5px;
+      border-radius: 10px;
+      max-width: 320px;
+      margin: 0 auto 20px;
+    }
+
+    .xo-cell {
+      background: var(--bg);
+      height: 100px;
+      font-size: 3.5em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      color: var(--primary);
+      border-radius: 5px;
+    }
+
+    .xo-cell:hover {
+      background: var(--accent);
+      transform: rotate(3deg) scale(1.1);
+    }
+
+    .xo-cell.taken { cursor: not-allowed; }
+    .xo-cell.winning { background: var(--success-color); color: white; }
+
+    .xo-buttons {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .xo-buttons button {
+      padding: 10px 20px;
+      font-size: 1em;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .xo-buttons button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0,0,0,0.2);
+    }
+
+    .xo-btn-new { 
+      background: var(--primary); 
+      color: #fff; 
+    }
+
+    .xo-btn-reset { 
+      background: var(--error-color); 
+      color: #fff; 
+    }
+
+    .xo-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3em;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    .xo-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .xo-overlay.win {
+      background: rgba(46, 204, 113, 0.9);
+      color: white;
+      animation: animateOverlay 2s ease;
+    }
+
+    .xo-overlay.lose {
+      background: rgba(231, 76, 60, 0.9);
+      color: white;
+      animation: animateOverlay 2s ease;
+    }
+
+    .xo-overlay.draw {
+      background: rgba(255, 165, 0, 0.9);
+      color: white;
+      animation: animateOverlay 2s ease;
+    }
+
+    @keyframes animateOverlay {
+      0% { transform: scale(0.5); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes cellPop {
+      0% { transform: scale(0); }
+      90% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    .xo-cell:not(.taken) { animation: cellPop 0.3s ease; }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header { flex-direction: column; padding: 1rem; }
+      nav ul { margin-top: 1rem; flex-wrap: wrap; justify-content: center; }
+      .toolbar { justify-content: center; }
+      .main-title { font-size: 2.5rem; }
+      #editor-area { min-height: 400px; }
+      .header-controls {
+        margin-top: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .notebooks-counter {
+        margin-left: 0;
+        margin-top: 0.5rem;
+      }
+      .notebook-card {
+        min-height: 180px;
+      }
+      .clock-widget {
+        position: static;
+        margin: 0.5rem auto;
+        width: fit-content;
+      }
+      .games-grid {
+        grid-template-columns: 1fr;
+      }
+      #xo-scoreboard {
+        grid-template-columns: 1fr;
+      }
+      .xo-board {
+        width: 250px;
+        height: 250px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .notebooks-grid {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+      }
+      
+      .main-title {
+        font-size: 2rem;
+      }
+      
+      .toolbar button {
+        padding: 0.3rem 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      .modal-content {
+        padding: 1.5rem;
+      }
+
+      .modal-title {
+        font-size: 1.3rem;
+      }
+
+      .modal-actions {
+        flex-direction: column;
+      }
+
+      .modal-btn {
+        width: 100%;
+      }
+
+      .search-modal {
+        width: 95%;
+        padding: 1rem;
+      }
+
+      .games-title {
+        font-size: 2rem;
+      }
+
+      .xo-board {
+        width: 200px;
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading Spinner -->
+  <div class="spinner" id="spinner">
+    <div class="spinner-inner"></div>
+  </div>
+
+  <!-- Clock Widget -->
+  <div class="clock-widget" id="clock-widget">
+    <div class="clock-time" id="clock-time"></div>
+    <div class="clock-date" id="clock-date"></div>
+    <div class="clock-settings">
+      <label for="timezone-select">المنطقة الزمنية:</label>
+      <select id="timezone-select">
+        <option value="auto">تلقائي (حسب المتصفح)</option>
+        <option value="UTC">UTC</option>
+        <option value="UTC+3">UTC+3 (السعودية، مصر)</option>
+        <option value="UTC+4">UTC+4 (الإمارات)</option>
+        <option value="UTC+2">UTC+2 (ليبيا)</option>
+        <option value="UTC+1">UTC+1 (المغرب، تونس)</option>
+      </select>
+      <label for="time-format">تنسيق الوقت:</label>
+      <select id="time-format">
+        <option value="12">12 ساعة</option>
+        <option value="24">24 ساعة</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <span class="logo-icon">📔</span>
+      <span>مذكرة</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#" onclick="showHome()" id="home-link" class="active">الصفحة الرئيسية</a></li>
+        <li><a href="#" onclick="showEditor()" id="editor-link">المفكرة</a></li>
+        <li><button class="play-btn" onclick="showGamesPage()">
+          <i class="fas fa-gamepad"></i> العب
+        </button></li>
+      </ul>
+    </nav>
+    <div class="header-controls">
+      <div class="notebooks-counter" id="notebooks-counter">
+        المذكرات: 0
+      </div>
+      <button class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="تبديل الوضع الداكن">
+        <span id="dark-mode-icon">🌙</span> الوضع الداكن
+      </button>
+      <div class="lang-switch">
+        <button onclick="changeLang('ar')" class="active" id="ar-btn">AR</button>
+        <button onclick="changeLang('en')" id="en-btn">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div id="home-page">
+    <h1 class="main-title">مفكراتي</h1>
+    
+    <div class="add-notebook-container">
+      <button class="add-notebook-btn" onclick="showAddNotebookModal()" aria-label="إضافة مذكرة جديدة">
+        <span>+</span> إضافة مذكرة جديدة
+      </button>
+    </div>
+    
+    <div class="notebooks-grid" id="notebooks-grid">
+      <!-- Notebooks will be added here dynamically -->
+    </div>
+  </div>
+
+  <!-- Editor -->
+  <div id="editor-container" class="editor-container">
+    <button class="back-btn" onclick="showHome()" aria-label="العودة للصفحة الرئيسية">
+      <span>←</span> الرجوع
+    </button>
+    
+    <section class="editor">
+      <div class="toolbar">
+        <button onclick="execCmd('bold')" aria-label="عريض"><b>B</b></button>
+        <button onclick="execCmd('italic')" aria-label="مائل"><i>I</i></button>
+        <button onclick="execCmd('underline')" aria-label="تحته خط"><u>U</u></button>
+        <button onclick="execCmd('insertOrderedList')" aria-label="قائمة مرقمة">OL</button>
+        <button onclick="execCmd('insertUnorderedList')" aria-label="قائمة نقطية">UL</button>
+        <button onclick="addCheckbox()" aria-label="إضافة مهمة">✓ مهمة</button>
+        <button onclick="insertTable()" aria-label="إضافة جدول">📊 جدول</button>
+        <button onclick="attachFile()" aria-label="إرفاق ملف">📎 ملف</button>
+        <button onclick="showSearchModal()" aria-label="بحث">🔍 بحث</button>
+        <button onclick="execCmd('undo')" aria-label="تراجع">↶</button>
+        <button onclick="execCmd('redo')" aria-label="إعادة">↷</button>
+        <button onclick="triggerImage()" aria-label="إدراج صورة">🖼️</button>
+        <button onclick="saveContent()" aria-label="حفظ المحتوى">💾 حفظ</button>
+
+        <div class="font-size-container">
+          <span class="font-size-value">16px</span>
+          <input type="range" min="10" max="100" value="16" class="font-size-slider" id="fontSizeSlider" 
+                 oninput="changeFontSize(this.value)" aria-label="حجم الخط">
+        </div>
+        
+        <select onchange="execCmd('fontName', this.value)" aria-label="اختيار خط" id="font-selector">
+          <!-- Arabic Fonts -->
+          <optgroup label="خطوط عربية">
+            <option value="'Tajawal', sans-serif">Tajawal</option>
+            <option value="'Amiri', serif">Amiri</option>
+            <option value="'Almarai', sans-serif">Almarai</option>
+            <option value="'Cairo', sans-serif">Cairo</option>
+            <option value="Arial, sans-serif" style="font-family: Arial">Arial</option>
+            <option value="'Times New Roman', serif" style="font-family: Times New Roman">Times New Roman</option>
+          </optgroup>
+          <!-- English Fonts -->
+          <optgroup label="English Fonts">
+            <option value="'Roboto', sans-serif">Roboto</option>
+            <option value="'Open Sans', sans-serif">Open Sans</option>
+            <option value="'Lato', sans-serif">Lato</option>
+            <option value="'Montserrat', sans-serif">Montserrat</option>
+            <option value="'Poppins', sans-serif">Poppins</option>
+            <option value="'Fira Sans', sans-serif">Fira Sans</option>
+            <option value="'Merriweather', serif">Merriweather</option>
+            <option value="'Courier New', monospace">Courier New</option>
+            <option value="'Dancing Script', cursive">Dancing Script</option>
+          </optgroup>
+        </select>
+        
+        <input type="color" onchange="execCmd('foreColor', this.value)" title="لون النص" aria-label="لون النص">
+        <input type="color" onchange="execCmd('hiliteColor', this.value)" title="لون الخلفية" aria-label="لون الخلفية">
+      </div>
+      <input type="file" id="image-input" accept="image/*" style="display:none" />
+      <input type="file" id="file-input" style="display:none" />
+      <div id="editor-area" contenteditable="true"></div>
+    </section>
+  </div>
+
+  <!-- Games Page -->
+  <div id="games-page" class="games-page">
+    <button class="back-btn" onclick="showHome()" aria-label="العودة للصفحة الرئيسية">
+      <span>←</span> الرجوع
+    </button>
+    
+    <h1 class="games-title">الألعاب</h1>
+    
+    <div class="games-grid">
+      <div class="game-card" onclick="showGame('xo')">
+        <div class="game-icon">⭕❌</div>
+        <h3 class="game-name">لعبة XO</h3>
+        <p class="game-desc">لعبة الذكاء الشهيرة بين لاعبين</p>
+        <button class="play-btn-game">العب الآن</button>
+      </div>
+    </div>
+    
+    <!-- Game Emojis Background -->
+    <div class="game-emojis" id="game-emojis"></div>
+  </div>
+
+  <!-- XO Game Container -->
+  <div id="xo-game" class="game-container">
+    <div class="game-header">
+      <h2 class="game-title">لعبة XO</h2>
+      <button class="back-btn" onclick="showGamesPage()">
+        <span>←</span> العودة للألعاب
+      </button>
+    </div>
+
+      <div id="xo-scoreboard">
+        <div>لاعب X: <span id="scoreX">0</span></div>
+        <div>الوقت المتبقي: <span id="timer">30</span></div>
+        <div>لاعب O: <span id="scoreO">0</span></div>
+      </div>
+      
+      <div id="xo-gameOptions">
+        <label for="modeSelect">وضع اللعبة:</label>
+        <select id="modeSelect" onchange="toggleDifficulty()">
+          <option value="pvp">لاعب ضد لاعب</option>
+          <option value="bot">لاعب ضد البوت</option>
+        </select>
+        <span id="difficultyContainer" style="display:none;">
+          <label for="difficultySelect">مستوى البوت:</label>
+          <select id="difficultySelect">
+            <option value="سهل">سهل</option>
+            <option value="متوسط">متوسط</option>
+            <option value="صعب">صعب</option>
+          </select>
+        </span>
+      </div>
+      
+      <div id="xo-status">دور اللاعب X</div>
+      
+      <div class="xo-board" id="board"></div>
+      
+      <div class="xo-buttons">
+        <button class="xo-btn-new" onclick="newGame()">لعبة جديدة</button>
+        <button class="xo-btn-reset" onclick="resetScores()">إعادة ضبط النتائج</button>
+      </div>
+      
+      <!-- طبقات الأنميشن -->
+      <div id="lostOverlay" class="xo-overlay lose">وييو خسرت!🤣❌</div>
+      <div id="winOverlay" class="xo-overlay win"> اسسسسسسسلم طلعت لعيب!😎✅</div>
+      <div id="drawOverlay" class="xo-overlay draw">تعادل يالحبيب 🤦‍♀️🤦‍♂️🔄!</div>
+    </div>
+  </div>
+
+  <!-- Auto-save Indicator -->
+  <div id="auto-save-indicator" class="auto-save-indicator">
+    تم الحفظ تلقائيًا
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+  <!-- Rename Modal -->
+  <div id="rename-modal" class="modal">
+    <div class="modal-content">
+      <h3 class="modal-title">تعديل اسم المذكرة</h3>
+      <input type="text" id="notebook-name-input" class="modal-input" placeholder="اسم المذكرة">
+      <div class="modal-actions">
+        <button class="modal-btn confirm" onclick="renameNotebook()">تأكيد</button>
+        <button class="modal-btn cancel" onclick="hideRenameModal()">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Notebook Modal -->
+  <div id="add-notebook-modal" class="modal">
+    <div class="modal-content">
+      <h3 class="modal-title">إضافة مذكرة جديدة</h3>
+      <input type="text" id="new-notebook-name" class="modal-input" placeholder="اسم المذكرة الجديدة">
+      <div class="modal-actions">
+        <button class="modal-btn confirm" onclick="addNewNotebook()">إضافة</button>
+        <button class="modal-btn cancel" onclick="hideAddNotebookModal()">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search Modal -->
+  <div id="search-modal" class="search-modal">
+    <div class="search-header">
+      <h3>بحث في النص</h3>
+      <button onclick="hideSearchModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+    </div>
+    <div class="search-input-container">
+      <input type="text" id="search-text" class="search-input" placeholder="اكتب الكلمة للبحث...">
+      <button onclick="searchText()" class="modal-btn confirm">بحث</button>
+    </div>
+    <div class="search-results" id="search-results">
+      <!-- Search results will appear here -->
+    </div>
+    <div class="search-nav">
+      <button onclick="navigateSearch(-1)" class="modal-btn cancel">السابق</button>
+      <button onclick="navigateSearch(1)" class="modal-btn confirm">التالي</button>
+    </div>
+  </div>
+
+  <script>
+    // Notebooks data
+    let notebooks = [];
+    let currentNotebookId = null;
+    let currentLang = 'ar';
+    let darkMode = false;
+    let autoSaveInterval;
+    let autoSaveEnabled = true;
+    let searchResults = [];
+    let currentSearchIndex = -1;
+    let clockInterval;
+    let timezone = 'auto';
+    let timeFormat = '12';
+
+    // XO Game Variables
+    let board = ['', '', '', '', '', '', '', '', ''];
+    let currentPlayer = 'X';
+    let gameActive = true;
+    let winningCombinationFound = null;
+    let scoreX = 0, scoreO = 0, scoreDraw = 0;
+    let gameMode = "pvp";
+    let botDifficulty = "سهل";
+    const winningCombinations = [
+      [0,1,2], [3,4,5], [6,7,8],
+      [0,3,6], [1,4,7], [2,5,8],
+      [0,4,8], [2,4,6]
+    ];
+    let timeLeft = 30, timerInterval;
+    
+    function startTimer() {
+      clearInterval(timerInterval);
+      timeLeft = 30;
+      document.getElementById('timer').textContent = timeLeft;
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        document.getElementById('timer').textContent = timeLeft;
+        if(timeLeft <= 0) { clearInterval(timerInterval); handleTimeout(); }
+      }, 1000);
+    }
+    
+    function handleTimeout() {
+      gameActive = false;
+      document.getElementById("xo-status").textContent = "انتهى الوقت!";
+      if(currentPlayer === 'X') scoreO++;
+      else scoreX++;
+      updateScoreDisplay();
+      document.getElementById("xo-status").textContent += " سيتم بدء لعبة جديدة تلقائيًا...";
+      setTimeout(newGame, 3000);
+    }
+    
+    function renderBoard() {
+      const boardElement = document.getElementById("board");
+      boardElement.innerHTML = '';
+      board.forEach((cell, index) => {
+        const cellElement = document.createElement("div");
+        cellElement.classList.add("xo-cell");
+        cellElement.textContent = cell;
+        if(winningCombinationFound && winningCombinationFound.includes(index)) {
+          cellElement.classList.add("winning");
+        }
+        cellElement.addEventListener("click", () => cellClicked(index));
+        if(cell !== '') cellElement.classList.add("taken");
+        boardElement.appendChild(cellElement);
+      });
+    }
+    
+    function cellClicked(index) {
+      if(board[index] !== '' || !gameActive) return;
+      if(gameMode === "bot" && currentPlayer !== 'X') return;
+      board[index] = currentPlayer;
+      checkWinner();
+      renderBoard();
+      if(gameActive) {
+        if(gameMode === "bot") {
+          currentPlayer = 'O';
+          document.getElementById("xo-status").textContent = "دور البوت";
+          setTimeout(botMove, 500);
+        } else {
+          currentPlayer = (currentPlayer === 'X') ? 'O' : 'X';
+          document.getElementById("xo-status").textContent = `دور اللاعب ${currentPlayer}`;
+        }
+      }
+    }
+    
+    function checkWinner() {
+      for(let combination of winningCombinations) {
+        const [a, b, c] = combination;
+        if(board[a] && board[a] === board[b] && board[a] === board[c]) {
+          gameActive = false;
+          winningCombinationFound = combination;
+          document.getElementById("xo-status").textContent = `الفائز هو ${board[a]}!`;
+          updateScore(board[a]);
+          if(gameMode === "bot") {
+            if(board[a] === 'X') setTimeout(showWinAnimation, 500);
+            else if(board[a] === 'O') setTimeout(showLostAnimation, 500);
+          }
+          document.getElementById("xo-status").textContent += " سيتم بدء لعبة جديدة تلقائيًا...";
+          setTimeout(newGame, 3000);
+          return;
+        }
+      }
+      if(!board.includes('')) {
+        gameActive = false;
+        document.getElementById("xo-status").textContent = "التعادل!";
+        updateScore('draw');
+        showDrawAnimation();
+        document.getElementById("xo-status").textContent += " سيتم بدء لعبة جديدة تلقائيًا...";
+        setTimeout(newGame, 3000);
+      }
+    }
+    
+    function updateScore(winner) {
+      if(winner === 'X') { scoreX++; document.getElementById("scoreX").textContent = scoreX; }
+      else if(winner === 'O') { scoreO++; document.getElementById("scoreO").textContent = scoreO; }
+      else if(winner === 'draw') { scoreDraw++; }
+      localStorage.setItem('ticTacToeScores', JSON.stringify({ X: scoreX, O: scoreO, draw: scoreDraw }));
+    }
+    
+    function updateScoreDisplay() {
+      document.getElementById("scoreX").textContent = scoreX;
+      document.getElementById("scoreO").textContent = scoreO;
+    }
+    
+    function newGame() {
+      clearInterval(timerInterval);
+      gameMode = document.getElementById("modeSelect").value;
+      if(gameMode === "bot") { botDifficulty = document.getElementById("difficultySelect").value; }
+      board = ['', '', '', '', '', '', '', '', ''];
+      currentPlayer = 'X';
+      gameActive = true;
+      winningCombinationFound = null;
+      document.getElementById("xo-status").textContent = "دور اللاعب X";
+      renderBoard();
+      startTimer();
+    }
+    
+    function resetScores() {
+      scoreX = scoreO = scoreDraw = 0;
+      updateScoreDisplay();
+      localStorage.removeItem('ticTacToeScores');
+      newGame();
+    }
+    
+    function botMove() {
+      if(!gameActive) return;
+      let move;
+      if(botDifficulty === 'سهل') move = getRandomMove();
+      else if(botDifficulty === 'متوسط') move = mediumBotMove();
+      else if(botDifficulty === 'صعب') move = bestMove();
+      board[move] = 'O';
+      checkWinner();
+      if(gameActive) { currentPlayer = 'X'; document.getElementById("xo-status").textContent = "دور اللاعب X"; }
+      renderBoard();
+    }
+    
+    function getAvailableMoves(bd = board) {
+      let moves = [];
+      for(let i = 0; i < bd.length; i++) { if(bd[i] === '') moves.push(i); }
+      return moves;
+    }
+    
+    function getRandomMove() {
+      let moves = getAvailableMoves();
+      return moves[Math.floor(Math.random() * moves.length)];
+    }
+    
+    function mediumBotMove() {
+      let moves = getAvailableMoves();
+      for(let i = 0; i < moves.length; i++) {
+        let idx = moves[i];
+        board[idx] = 'O';
+        if(checkWinnerForBoard(board) === 'O') { board[idx] = ''; return idx; }
+        board[idx] = '';
+      }
+      for(let i = 0; i < moves.length; i++) {
+        let idx = moves[i];
+        board[idx] = 'X';
+        if(checkWinnerForBoard(board) === 'X') { board[idx] = ''; return idx; }
+        board[idx] = '';
+      }
+      return getRandomMove();
+    }
+    
+    function bestMove() {
+      let bestScore = -Infinity, move;
+      let moves = getAvailableMoves();
+      for(let i = 0; i < moves.length; i++) {
+        let idx = moves[i];
+        board[idx] = 'O';
+        let score = minimax(board, 0, false);
+        board[idx] = '';
+        if(score > bestScore) { bestScore = score; move = idx; }
+      }
+      return move;
+    }
+    
+    function minimax(bd, depth, isMaximizing) {
+      let result = checkWinnerForBoard(bd);
+      if(result !== null) {
+        if(result === 'O') return 10 - depth;
+        else if(result === 'X') return depth - 10;
+        else if(result === 'draw') return 0;
+      }
+      if(isMaximizing) {
+        let bestScore = -Infinity;
+        let moves = getAvailableMoves(bd);
+        for(let i = 0; i < moves.length; i++) {
+          bd[moves[i]] = 'O';
+          let score = minimax(bd, depth + 1, false);
+          bd[moves[i]] = '';
+          bestScore = Math.max(score, bestScore);
+        }
+        return bestScore;
+      } else {
+        let bestScore = Infinity;
+        let moves = getAvailableMoves(bd);
+        for(let i = 0; i < moves.length; i++) {
+          bd[moves[i]] = 'X';
+          let score = minimax(bd, depth + 1, true);
+          bd[moves[i]] = '';
+          bestScore = Math.min(score, bestScore);
+        }
+        return bestScore;
+      }
+    }
+    
+    function checkWinnerForBoard(bd) {
+      for(let combination of winningCombinations) {
+        const [a, b, c] = combination;
+        if(bd[a] && bd[a] === bd[b] && bd[a] === bd[c]) return bd[a];
+      }
+      if(!bd.includes('')) return 'draw';
+      return null;
+    }
+    
+    function toggleDifficulty() {
+      let mode = document.getElementById("modeSelect").value;
+      let diffContainer = document.getElementById("difficultyContainer");
+      if(mode === "bot") { diffContainer.style.display = "inline"; }
+      else { diffContainer.style.display = "none"; }
+    }
+    
+    function showLostAnimation() {
+      const lostOverlay = document.getElementById("lostOverlay");
+      lostOverlay.classList.add("active");
+      setTimeout(() => { lostOverlay.classList.remove("active"); }, 2000);
+    }
+    
+    function showWinAnimation() {
+      const winOverlay = document.getElementById("winOverlay");
+      winOverlay.classList.add("active");
+      setTimeout(() => { winOverlay.classList.remove("active"); }, 2000);
+    }
+    
+    function showDrawAnimation() {
+      const drawOverlay = document.getElementById("drawOverlay");
+      drawOverlay.classList.add("active");
+      setTimeout(() => { drawOverlay.classList.remove("active"); }, 2000);
+    }
+
+    // Load saved notebooks and content on page load
+    window.onload = function() {
+      const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+      if (savedDarkMode) {
+        toggleDarkMode(false);
+      }
+      
+      // Load clock settings
+      const savedTimezone = localStorage.getItem('timezone');
+      const savedTimeFormat = localStorage.getItem('timeFormat');
+      if (savedTimezone) timezone = savedTimezone;
+      if (savedTimeFormat) timeFormat = savedTimeFormat;
+      
+      // Set dropdown values
+      document.getElementById('timezone-select').value = timezone;
+      document.getElementById('time-format').value = timeFormat;
+      
+      showHome();
+      loadNotebooks();
+      changeFontSize(16);
+      setupAutoSave();
+      updateNotebooksCounter();
+      updateClock();
+      setupClock();
+      createGameEmojis();
+      
+      // Initialize XO game
+      const savedScores = JSON.parse(localStorage.getItem('ticTacToeScores'));
+      if(savedScores) {
+        scoreX = savedScores.X || 0;
+        scoreO = savedScores.O || 0;
+        scoreDraw = savedScores.draw || 0;
+        updateScoreDisplay();
+      }
+      renderBoard();
+      
+      // Clock widget click handler
+      document.getElementById('clock-widget').addEventListener('click', function(e) {
+        if (e.target.closest('.clock-settings')) return;
+        this.classList.toggle('active');
+      });
+    };
+
+    // Create floating game emojis
+    function createGameEmojis() {
+      const emojis = ['🎮', '🕹️', '👾', '🎲', '♟️', '🎯', '🧩', '🃏', '🀄', '🎳'];
+      const container = document.getElementById('game-emojis');
+      
+      for (let i = 0; i < 15; i++) {
+        const emoji = document.createElement('div');
+        emoji.className = 'game-emoji';
+        emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        
+        // Random position
+        emoji.style.left = Math.random() * 100 + '%';
+        emoji.style.top = Math.random() * 100 + '%';
+        
+        // Random animation duration and delay
+        emoji.style.animationDuration = 5 + Math.random() * 10 + 's';
+        emoji.style.animationDelay = Math.random() * 5 + 's';
+        
+        container.appendChild(emoji);
+      }
+    }
+
+    // Show games page
+    function showGamesPage() {
+      hideAllPages();
+      document.getElementById('games-page').style.display = 'block';
+      document.getElementById('home-link').classList.remove('active');
+      document.getElementById('editor-link').classList.remove('active');
+    }
+
+    // Show specific game
+    function showGame(game) {
+      hideAllPages();
+      if (game === 'xo') {
+        document.getElementById('xo-game').style.display = 'block';
+        newGame();
+      }
+    }
+
+    // Hide all pages
+    function hideAllPages() {
+      document.getElementById('home-page').style.display = 'none';
+      document.getElementById('editor-container').style.display = 'none';
+      document.getElementById('games-page').style.display = 'none';
+      document.getElementById('xo-game').style.display = 'none';
+    }
+
+    function showLoading(show) {
+      const spinner = document.getElementById('spinner');
+      spinner.style.display = show ? 'flex' : 'none';
+    }
+
+    function showToast(message, isError = false) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = isError ? 'toast error show' : 'toast show';
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    function sanitizeInput(input) {
+      return input.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function updateNotebooksCounter() {
+      const counter = document.getElementById('notebooks-counter');
+      counter.textContent = currentLang === 'ar' 
+        ? `المذكرات: ${notebooks.length}`
+        : `Notebooks: ${notebooks.length}`;
+    }
+
+    function setupAutoSave() {
+      if (autoSaveInterval) clearInterval(autoSaveInterval);
+      
+      autoSaveInterval = setInterval(() => {
+        if (autoSaveEnabled && currentNotebookId) {
+          autoSaveContent();
+        }
+      }, 30000);
+    }
+
+    function autoSaveContent() {
+      if (currentNotebookId) {
+        const content = document.getElementById('editor-area').innerHTML;
+        const notebook = notebooks.find(n => n.id === currentNotebookId);
+        if (notebook && notebook.content !== content) {
+          notebook.content = content;
+          notebook.lastEdited = new Date().toLocaleString();
+          saveNotebooks();
+          
+          const indicator = document.getElementById('auto-save-indicator');
+          indicator.textContent = currentLang === 'ar' ? 'تم الحفظ تلقائيًا' : 'Auto-saved';
+          indicator.classList.add('show');
+          setTimeout(() => indicator.classList.remove('show'), 2000);
+        }
+      }
+    }
+
+    function toggleDarkMode(shouldSave = true) {
+      darkMode = !darkMode;
+      document.body.classList.toggle('dark-mode', darkMode);
+      
+      const icon = document.getElementById('dark-mode-icon');
+      icon.textContent = darkMode ? '☀️' : '🌙';
+      
+      const button = document.querySelector('.dark-mode-toggle');
+      button.innerHTML = `<span id="dark-mode-icon">${darkMode ? '☀️' : '🌙'}</span> ${darkMode ? 'الوضع الفاتح' : 'الوضع الداكن'}`;
+      
+      if (shouldSave) {
+        localStorage.setItem('darkMode', darkMode);
+      }
+    }
+
+    function loadNotebooks() {
+      showLoading(true);
+      try {
+        const savedNotebooks = localStorage.getItem('notebooks');
+        if (savedNotebooks) {
+          notebooks = JSON.parse(savedNotebooks).filter(n => n.id && n.name);
+          notebooks.sort((a, b) => (b.pinned || false) - (a.pinned || false));
+          renderNotebooks();
+        } else {
+          addDefaultNotebook();
+        }
+      } catch (e) {
+        console.error('Error loading notebooks:', e);
+        showToast(currentLang === 'ar' ? 'حدث خطأ في تحميل المذكرات' : 'Error loading notebooks', true);
+        addDefaultNotebook();
+      } finally {
+        showLoading(false);
+      }
+    }
+
+    function addDefaultNotebook() {
+      const defaultNotebook = {
+        id: generateId(),
+        name: 'المفكرة الشخصية',
+        lastEdited: new Date().toLocaleString(),
+        content: '',
+        pinned: false,
+        rating: 0
+      };
+      notebooks.push(defaultNotebook);
+      saveNotebooks();
+      renderNotebooks();
+    }
+
+    function renderNotebooks() {
+      const grid = document.getElementById('notebooks-grid');
+      grid.innerHTML = '';
+      
+      notebooks.sort((a, b) => (b.pinned || false) - (a.pinned || false));
+      
+      notebooks.forEach(notebook => {
+        const notebookElement = document.createElement('div');
+        notebookElement.className = `notebook-card ${notebook.pinned ? 'pinned' : ''}`;
+        notebookElement.setAttribute('data-id', notebook.id);
+        notebookElement.onclick = () => openNotebook(notebook.id);
+        
+        // Create rating stars
+        let starsHtml = '';
+        for (let i = 1; i <= 5; i++) {
+          starsHtml += `<span class="star" onclick="rateNotebook(event, '${notebook.id}', ${i})">${i <= notebook.rating ? '★' : '☆'}</span>`;
+        }
+        
+        notebookElement.innerHTML = `
+          <div class="notebook-menu" onclick="event.stopPropagation(); toggleMenu(this)" aria-label="قائمة الخيارات">⋮
+            <div class="menu-dropdown">
+              <button onclick="showRenameModal('${notebook.id}')">${currentLang === 'ar' ? 'تعديل الاسم' : 'Rename'}</button>
+              <button onclick="togglePinNotebook('${notebook.id}')">${notebook.pinned ? (currentLang === 'ar' ? 'إلغاء التثبيت' : 'Unpin') : (currentLang === 'ar' ? 'تثبيت' : 'Pin')}</button>
+              <button onclick="deleteNotebook('${notebook.id}')">${currentLang === 'ar' ? 'حذف' : 'Delete'}</button>
+            </div>
+          </div>
+          <h3>${sanitizeInput(notebook.name)}</h3>
+          <div class="notebook-rating">${starsHtml}</div>
+          <p>${currentLang === 'ar' ? 'آخر تعديل: ' : 'Last edited: '}${notebook.lastEdited}</p>
+          <div class="notebook-actions">
+            <button class="notebook-btn pin-btn" onclick="event.stopPropagation(); togglePinNotebook('${notebook.id}')">
+              ${notebook.pinned ? (currentLang === 'ar' ? 'إلغاء التثبيت' : 'Unpin') : (currentLang === 'ar' ? 'تثبيت' : 'Pin')}
+            </button>
+          </div>
+        `;
+        
+        grid.appendChild(notebookElement);
+      });
+      
+      updateNotebooksCounter();
+    }
+
+    function rateNotebook(event, notebookId, rating) {
+      event.stopPropagation();
+      const notebook = notebooks.find(n => n.id === notebookId);
+      if (notebook) {
+        notebook.rating = rating;
+        saveNotebooks();
+        renderNotebooks();
+        showToast(
+          currentLang === 'ar' 
+            ? `تم تقييم المذكرة بـ ${rating} نجوم` 
+            : `Notebook rated ${rating} stars`
+        );
+      }
+    }
+
+    function togglePinNotebook(notebookId) {
+      const notebook = notebooks.find(n => n.id === notebookId);
+      if (notebook) {
+        notebook.pinned = !notebook.pinned;
+        saveNotebooks();
+        renderNotebooks();
+        showToast(
+          currentLang === 'ar' 
+            ? `تم ${notebook.pinned ? 'تثبيت' : 'إلغاء تثبيت'} المذكرة` 
+            : `Notebook ${notebook.pinned ? 'pinned' : 'unpinned'}`
+        );
+      }
+    }
+
+    function generateId() {
+      return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    }
+
+    function saveNotebooks() {
+      try {
+        localStorage.setItem('notebooks', JSON.stringify(notebooks));
+        updateNotebooksCounter();
+      } catch (e) {
+        console.error('Error saving notebooks:', e);
+        showToast(currentLang === 'ar' ? 'حدث خطأ في حفظ المذكرات' : 'Error saving notebooks', true);
+      }
+    }
+
+    function showHome() {
+      hideAllPages();
+      document.getElementById('home-page').style.display = 'block';
+      
+      // Update active nav link
+      document.getElementById('home-link').classList.add('active');
+      document.getElementById('editor-link').classList.remove('active');
+    }
+    
+    function showEditor(notebookId = null) {
+      hideAllPages();
+      document.getElementById('editor-container').style.display = 'block';
+      
+      // Update active nav link
+      document.getElementById('editor-link').classList.add('active');
+      document.getElementById('home-link').classList.remove('active');
+      
+      if (notebookId) openNotebook(notebookId);
+    }
+    
+    function openNotebook(notebookId) {
+      const notebook = notebooks.find(n => n.id === notebookId);
+      if (notebook) {
+        currentNotebookId = notebookId;
+        document.getElementById('editor-area').innerHTML = notebook.content || '';
+        showEditor();
+      }
+    }
+    
+    function showAddNotebookModal() {
+      document.getElementById('new-notebook-name').value = '';
+      document.getElementById('add-notebook-modal').style.display = 'flex';
+      document.getElementById('new-notebook-name').focus();
+    }
+
+    function hideAddNotebookModal() {
+      document.getElementById('add-notebook-modal').style.display = 'none';
+    }
+
+    function addNewNotebook() {
+      const nameInput = document.getElementById('new-notebook-name');
+      const name = sanitizeInput(nameInput.value.trim()) || (currentLang === 'ar' ? 'مذكرة جديدة' : 'New Notebook');
+      
+      const newNotebook = {
+        id: generateId(),
+        name: name,
+        lastEdited: new Date().toLocaleString(),
+        content: '',
+        pinned: false,
+        rating: 0
+      };
+      
+      notebooks.push(newNotebook);
+      saveNotebooks();
+      renderNotebooks();
+      hideAddNotebookModal();
+      openNotebook(newNotebook.id);
+      
+      showToast(
+        currentLang === 'ar' 
+          ? 'تم إنشاء مذكرة جديدة بنجاح' 
+          : 'New notebook created successfully'
+      );
+    }
+
+    function showRenameModal(notebookId) {
+      const notebook = notebooks.find(n => n.id === notebookId);
+      if (notebook) {
+        document.getElementById('notebook-name-input').value = notebook.name;
+        document.getElementById('notebook-name-input').setAttribute('data-id', notebookId);
+        document.getElementById('rename-modal').style.display = 'flex';
+        document.getElementById('notebook-name-input').focus();
+      }
+    }
+
+    function hideRenameModal() {
+      document.getElementById('rename-modal').style.display = 'none';
+    }
+
+    function renameNotebook() {
+      const nameInput = document.getElementById('notebook-name-input');
+      const notebookId = nameInput.getAttribute('data-id');
+      const newName = sanitizeInput(nameInput.value.trim());
+      
+      if (newName && notebookId) {
+        const notebook = notebooks.find(n => n.id === notebookId);
+        if (notebook) {
+          notebook.name = newName;
+          notebook.lastEdited = new Date().toLocaleString();
+          saveNotebooks();
+          renderNotebooks();
+          hideRenameModal();
+          showToast(
+            currentLang === 'ar' 
+              ? 'تم تعديل اسم المذكرة بنجاح' 
+              : 'Notebook renamed successfully'
+          );
+        }
+      } else {
+        showToast(
+          currentLang === 'ar' 
+            ? 'الرجاء إدخال اسم صحيح للمذكرة' 
+            : 'Please enter a valid notebook name', 
+          true
+        );
+      }
+    }
+
+    function deleteNotebook(notebookId) {
+      const confirmMsg = currentLang === 'ar' 
+        ? 'هل أنت متأكد من حذف هذه المفكرة؟'
+        : 'Are you sure you want to delete this notebook?';
+      
+      if (confirm(confirmMsg)) {
+        const notebookName = notebooks.find(n => n.id === notebookId)?.name || '';
+        notebooks = notebooks.filter(n => n.id !== notebookId);
+        saveNotebooks();
+        renderNotebooks();
+        
+        if (currentNotebookId === notebookId) showHome();
+        
+        showToast(
+          currentLang === 'ar' 
+            ? `تم حذف المذكرة "${notebookName}"` 
+            : `Notebook "${notebookName}" deleted`
+        );
+      }
+    }
+
+    function toggleMenu(button) {
+      const dropdown = button.querySelector('.menu-dropdown');
+      document.querySelectorAll('.menu-dropdown').forEach(d => {
+        if (d !== dropdown) d.classList.remove('show');
+      });
+      dropdown.classList.toggle('show');
+    }
+
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.notebook-menu')) {
+        document.querySelectorAll('.menu-dropdown').forEach(d => {
+          d.classList.remove('show');
+        });
+      }
+      
+      // Close clock settings when clicking outside
+      if (!e.target.closest('#clock-widget')) {
+        document.getElementById('clock-widget').classList.remove('active');
+      }
+    });
+
+    function changeFontSize(size) {
+      document.getElementById('editor-area').style.fontSize = size + 'px';
+      document.querySelector('.font-size-value').textContent = size + 'px';
+    }
+
+    function execCmd(command, value = null) {
+      document.execCommand(command, false, value);
+      document.getElementById('editor-area').focus();
+    }
+
+    function triggerImage() {
+      document.getElementById('image-input').click();
+    }
+
+    // Add checkbox for tasks
+    function addCheckbox() {
+      const editor = document.getElementById('editor-area');
+      const checkboxId = 'checkbox-' + Date.now();
+      
+      const checkboxHtml = `
+        <div class="task-checkbox" contenteditable="false">
+          <input type="checkbox" id="${checkboxId}" onchange="taskChecked(this)">
+          <label for="${checkboxId}" contenteditable="true">اضغط لكتابة المهمة</label>
+        </div>
+      `;
+      
+      document.execCommand('insertHTML', false, checkboxHtml);
+      
+      // Focus on the label after insertion
+      setTimeout(() => {
+        const label = document.getElementById(checkboxId).nextElementSibling;
+        label.focus();
+      }, 0);
+    }
+
+    // Play sound when task is checked
+    function taskChecked(checkbox) {
+      const sound = new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU...'); // Short success sound
+      sound.play();
+      
+      if (checkbox.checked) {
+        checkbox.parentElement.style.opacity = '0.7';
+      } else {
+        checkbox.parentElement.style.opacity = '1';
+      }
+    }
+
+    // Insert table
+    function insertTable() {
+      const rows = prompt(currentLang === 'ar' ? 'عدد الصفوف:' : 'Number of rows:', '3');
+      const cols = prompt(currentLang === 'ar' ? 'عدد الأعمدة:' : 'Number of columns:', '3');
+      
+      if (rows && cols && !isNaN(rows) && !isNaN(cols)) {
+        let tableHtml = '<table border="1" style="width:100%;border-collapse:collapse;">';
+        
+        for (let i = 0; i < parseInt(rows); i++) {
+          tableHtml += '<tr>';
+          for (let j = 0; j < parseInt(cols); j++) {
+            tableHtml += `<td style="padding:8px;border:1px solid var(--text-color);">${i === 0 ? 'عنوان' : 'محتوى'}</td>`;
+          }
+          tableHtml += '</tr>';
+        }
+        
+        tableHtml += '</table>';
+        document.execCommand('insertHTML', false, tableHtml);
+      } else {
+        showToast(
+          currentLang === 'ar' 
+            ? 'الرجاء إدخال أرقام صحيحة' 
+            : 'Please enter valid numbers',
+          true
+        );
+      }
+    }
+
+    // Attach file
+    function attachFile() {
+      document.getElementById('file-input').click();
+    }
+
+    document.getElementById('file-input').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const fileLink = document.createElement('a');
+          fileLink.href = e.target.result;
+          fileLink.download = file.name;
+          fileLink.textContent = file.name;
+          fileLink.style.display = 'inline-block';
+          fileLink.style.margin = '5px';
+          fileLink.style.padding = '5px 10px';
+          fileLink.style.backgroundColor = 'var(--primary-light)';
+          fileLink.style.borderRadius = '4px';
+          fileLink.style.color = 'var(--text-color)';
+          fileLink.style.textDecoration = 'none';
+          
+          document.execCommand('insertHTML', false, fileLink.outerHTML);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Search functionality
+    function showSearchModal() {
+      document.getElementById('search-modal').style.display = 'block';
+      document.getElementById('search-text').focus();
+    }
+
+    function hideSearchModal() {
+      document.getElementById('search-modal').style.display = 'none';
+      clearSearchHighlights();
+      currentSearchIndex = -1;
+      searchResults = [];
+    }
+
+    function searchText() {
+      const searchTerm = document.getElementById('search-text').value.trim();
+      if (!searchTerm) return;
+      
+      const editor = document.getElementById('editor-area');
+      const content = editor.innerHTML;
+      
+      // Clear previous highlights
+      clearSearchHighlights();
+      
+      // Find all matches
+      const regex = new RegExp(searchTerm, 'gi');
+      let match;
+      searchResults = [];
+      
+      while ((match = regex.exec(content)) !== null) {
+        searchResults.push({
+          start: match.index,
+          end: match.index + searchTerm.length
+        });
+      }
+      
+      if (searchResults.length === 0) {
+        document.getElementById('search-results').innerHTML = 
+          currentLang === 'ar' 
+            ? '<p>لا توجد نتائج</p>' 
+            : '<p>No results found</p>';
+        return;
+      }
+      
+      // Highlight all matches
+      highlightSearchResults();
+      
+      // Show results count
+      document.getElementById('search-results').innerHTML = 
+        currentLang === 'ar' 
+          ? `<p>تم العثور على ${searchResults.length} نتيجة</p>` 
+          : `<p>Found ${searchResults.length} results</p>`;
+      
+      // Navigate to first result
+      currentSearchIndex = 0;
+      navigateToSearchResult(currentSearchIndex);
+    }
+
+    function highlightSearchResults() {
+      const editor = document.getElementById('editor-area');
+      const searchTerm = document.getElementById('search-text').value.trim();
+      const regex = new RegExp(searchTerm, 'gi');
+      
+      editor.innerHTML = editor.innerHTML.replace(regex, match => 
+        `<span class="search-highlight">${match}</span>`
+      );
+    }
+
+    function clearSearchHighlights() {
+      const editor = document.getElementById('editor-area');
+      const highlights = editor.querySelectorAll('.search-highlight');
+      
+      highlights.forEach(highlight => {
+        const parent = highlight.parentNode;
+        parent.replaceChild(document.createTextNode(highlight.textContent), highlight);
+        parent.normalize();
+      });
+    }
+
+    function navigateSearch(direction) {
+      if (searchResults.length === 0) return;
+      
+      currentSearchIndex += direction;
+      
+      if (currentSearchIndex >= searchResults.length) {
+        currentSearchIndex = 0;
+      } else if (currentSearchIndex < 0) {
+        currentSearchIndex = searchResults.length - 1;
+      }
+      
+      navigateToSearchResult(currentSearchIndex);
+    }
+
+    function navigateToSearchResult(index) {
+      if (index < 0 || index >= searchResults.length) return;
+      
+      const highlights = document.querySelectorAll('.search-highlight');
+      if (highlights.length === 0) return;
+      
+      // Remove previous active highlight
+      highlights.forEach(highlight => {
+        highlight.classList.remove('active-highlight');
+      });
+      
+      // Add active class to current highlight
+      highlights[index].classList.add('active-highlight');
+      
+      // Scroll to the highlight
+      highlights[index].scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
+
+    function saveContent() {
+      if (currentNotebookId) {
+        const content = document.getElementById('editor-area').innerHTML;
+        const notebook = notebooks.find(n => n.id === currentNotebookId);
+        if (notebook) {
+          notebook.content = content;
+          notebook.lastEdited = new Date().toLocaleString();
+          saveNotebooks();
+          renderNotebooks();
+          
+          showToast(
+            currentLang === 'ar' 
+              ? 'تم حفظ المحتوى بنجاح!' 
+              : 'Content saved successfully!'
+          );
+        }
+      }
+    }
+
+    document.getElementById('image-input').addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        if (file.size > 2 * 1024 * 1024) { // 2MB limit
+          showToast(
+            currentLang === 'ar' 
+              ? 'حجم الصورة كبير جداً (الحد الأقصى 2MB)' 
+              : 'Image too large (max 2MB)', 
+            true
+          );
+          return;
+        }
+        
+        const reader = new FileReader();
+        reader.onload = e => {
+          const img = new Image();
+          img.src = e.target.result;
+          img.onload = () => execCmd('insertImage', img.src);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Clock functions
+    function setupClock() {
+      if (clockInterval) clearInterval(clockInterval);
+      clockInterval = setInterval(updateClock, 1000);
+    }
+
+    function updateClock() {
+      let now;
+      
+      if (timezone === 'auto') {
+        now = new Date();
+      } else {
+        const offset = parseInt(timezone.replace('UTC', '')) || 0;
+        const utcNow = new Date();
+        const localTime = utcNow.getTime() + (utcNow.getTimezoneOffset() * 60000);
+        now = new Date(localTime + (offset * 3600000));
+      }
+      
+      const timeStr = formatTime(now);
+      const dateStr = formatDate(now);
+      
+      document.getElementById('clock-time').textContent = timeStr;
+      document.getElementById('clock-date').textContent = dateStr;
+    }
+
+    function formatTime(date) {
+      let hours = date.getHours();
+      let minutes = date.getMinutes();
+      let seconds = date.getSeconds();
+      
+      if (timeFormat === '12') {
+        const ampm = hours >= 12 ? 'م' : 'ص';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        return `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)} ${ampm}`;
+      } else {
+        return `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
+      }
+    }
+
+    function formatDate(date) {
+      const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      };
+      return date.toLocaleDateString(currentLang === 'ar' ? 'ar-SA' : 'en-US', options);
+    }
+
+    function padZero(num) {
+      return num < 10 ? `0${num}` : num;
+    }
+
+    // Save clock settings
+    document.getElementById('timezone-select').addEventListener('change', function() {
+      timezone = this.value;
+      localStorage.setItem('timezone', timezone);
+      updateClock();
+    });
+
+    document.getElementById('time-format').addEventListener('change', function() {
+      timeFormat = this.value;
+      localStorage.setItem('timeFormat', timeFormat);
+      updateClock();
+    });
+
+    const translations = {
+      ar: {
+        logo: 'مذكرة',
+        home: 'الصفحة الرئيسية',
+        editor: 'المفكرة',
+        mainTitle: 'مفكراتي',
+        newNotebook: 'مذكرة جديدة',
+        lastEdit: 'آخر تعديل: ',
+        saveBtn: '💾 حفظ',
+        saveSuccess: 'تم الحفظ بنجاح!',
+        deleteConfirm: 'هل أنت متأكد من حذف هذه المفكرة؟',
+        backBtn: '← الرجوع',
+        darkMode: 'الوضع الداكن',
+        lightMode: 'الوضع الفاتح',
+        addNotebook: '+ إضافة مذكرة جديدة',
+        autoSave: 'تم الحفظ تلقائيًا',
+        notebooksCounter: 'المذكرات: ',
+        pin: 'تثبيت',
+        unpin: 'إلغاء التثبيت',
+        rename: 'تعديل الاسم',
+        delete: 'حذف',
+        cancel: 'إلغاء',
+        search: 'بحث',
+        searchPlaceholder: 'اكتب الكلمة للبحث...',
+        noResults: 'لا توجد نتائج',
+        resultsFound: 'تم العثور على %d نتيجة',
+        task: 'مهمة',
+        table: 'جدول',
+        attach: 'ملف',
+        rowsPrompt: 'عدد الصفوف:',
+        colsPrompt: 'عدد الأعمدة:',
+        invalidNumbers: 'الرجاء إدخال أرقام صحيحة',
+        timezone: 'المنطقة الزمنية:',
+        timeFormat: 'تنسيق الوقت:',
+        time12: '12 ساعة',
+        time24: '24 ساعة',
+        autoTimezone: 'تلقائي (حسب المتصفح)',
+        play: 'العب',
+        gamesTitle: 'الألعاب',
+        xoGame: 'لعبة XO',
+        xoStatus: 'دور اللاعب %s',
+        xoWin: 'فاز اللاعب %s!',
+        xoDraw: 'تعادل!',
+        xoStart: 'ابدأ اللعبة!'
+      },
+      en: {
+        logo: 'Notebook',
+        home: 'Home',
+        editor: 'Notebook',
+        mainTitle: 'My Notebooks',
+        newNotebook: 'New Notebook',
+        lastEdit: 'Last edited: ',
+        saveBtn: '💾 Save',
+        saveSuccess: 'Content saved successfully!',
+        deleteConfirm: 'Are you sure you want to delete this notebook?',
+        backBtn: '← Back',
+        darkMode: 'Dark Mode',
+        lightMode: 'Light Mode',
+        addNotebook: '+ Add New Notebook',
+        autoSave: 'Auto-saved',
+        notebooksCounter: 'Notebooks: ',
+        pin: 'Pin',
+        unpin: 'Unpin',
+        rename: 'Rename',
+        delete: 'Delete',
+        cancel: 'Cancel',
+        search: 'Search',
+        searchPlaceholder: 'Type to search...',
+        noResults: 'No results found',
+        resultsFound: 'Found %d results',
+        task: 'Task',
+        table: 'Table',
+        attach: 'File',
+        rowsPrompt: 'Number of rows:',
+        colsPrompt: 'Number of columns:',
+        invalidNumbers: 'Please enter valid numbers',
+        timezone: 'Timezone:',
+        timeFormat: 'Time format:',
+        time12: '12-hour',
+        time24: '24-hour',
+        autoTimezone: 'Auto (browser)',
+        play: 'Play',
+        gamesTitle: 'Games',
+        xoGame: 'XO Game',
+        xoStatus: 'Player %s turn',
+        xoWin: 'Player %s wins!',
+        xoDraw: 'Draw!',
+        xoStart: 'Start the game!'
+      }
+    };
+
+    function changeLang(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      
+      // Update language buttons
+      document.getElementById('ar-btn').classList.toggle('active', lang === 'ar');
+      document.getElementById('en-btn').classList.toggle('active', lang === 'en');
+      
+      const t = translations[lang];
+      document.querySelector('.logo span:last-child').innerText = t.logo;
+      document.querySelector('.main-title').innerText = t.mainTitle;
+      
+      document.querySelectorAll('nav ul li a')[0].innerText = t.home;
+      document.querySelectorAll('nav ul li a')[1].innerText = t.editor;
+      document.querySelector('.play-btn').innerHTML = `<i class="fas fa-gamepad"></i> ${t.play}`;
+      
+      document.querySelector('.back-btn').innerHTML = `<span>←</span> ${t.backBtn}`;
+      document.querySelector('.add-notebook-btn').innerHTML = `<span>+</span> ${t.addNotebook}`;
+      document.querySelector('.dark-mode-toggle').innerHTML = 
+        `<span id="dark-mode-icon">${darkMode ? '☀️' : '🌙'}</span> ${darkMode ? t.lightMode : t.darkMode}`;
+      
+      document.querySelector('#rename-modal .modal-title').innerText = t.rename;
+      document.querySelector('#notebook-name-input').placeholder = t.newNotebook;
+      document.querySelector('#rename-modal .modal-btn.confirm').innerText = t.saveBtn;
+      document.querySelector('#rename-modal .modal-btn.cancel').innerText = t.cancel;
+      
+      document.querySelector('#add-notebook-modal .modal-title').innerText = t.addNotebook;
+      document.querySelector('#new-notebook-name').placeholder = t.newNotebook;
+      document.querySelector('#add-notebook-modal .modal-btn.confirm').innerText = t.addNotebook;
+      document.querySelector('#add-notebook-modal .modal-btn.cancel').innerText = t.cancel;
+      
+      document.querySelector('#auto-save-indicator').innerText = t.autoSave;
+      document.querySelector('footer p').innerText = `© ${new Date().getFullYear()} - ${lang === 'ar' ? 'جميع الحقوق محفوظة' : 'All Rights Reserved'}`;
+      
+      // Update toolbar buttons
+      document.querySelector('.toolbar button[onclick="saveContent()"]').innerHTML = t.saveBtn;
+      document.querySelector('.toolbar button[onclick="addCheckbox()"]').innerHTML = `✓ ${t.task}`;
+      document.querySelector('.toolbar button[onclick="insertTable()"]').innerHTML = `📊 ${t.table}`;
+      document.querySelector('.toolbar button[onclick="attachFile()"]').innerHTML = `📎 ${t.attach}`;
+      document.querySelector('.toolbar button[onclick="showSearchModal()"]').innerHTML = `🔍 ${t.search}`;
+      
+      // Update search modal
+      document.querySelector('#search-modal h3').textContent = t.search;
+      document.querySelector('#search-text').placeholder = t.searchPlaceholder;
+      document.querySelector('#search-modal button[onclick="navigateSearch(-1)"]').textContent = t.backBtn;
+      document.querySelector('#search-modal button[onclick="navigateSearch(1)"]').textContent = currentLang === 'ar' ? 'التالي' : 'Next';
+      
+      // Update clock settings
+      document.querySelector('#clock-settings label[for="timezone-select"]').textContent = t.timezone;
+      document.querySelector('#clock-settings label[for="time-format"]').textContent = t.timeFormat;
+      document.querySelector('#time-format option[value="12"]').textContent = t.time12;
+      document.querySelector('#time-format option[value="24"]').textContent = t.time24;
+      document.querySelector('#timezone-select option[value="auto"]').textContent = t.autoTimezone;
+      
+      // Update games page
+      document.querySelector('.games-title').textContent = t.gamesTitle;
+      document.querySelectorAll('.game-card')[0].querySelector('.game-name').textContent = t.xoGame;
+      document.querySelectorAll('.play-btn-game').forEach(btn => btn.textContent = t.play);
+      
+      // Update XO game
+      if (document.getElementById('xo-game').style.display === 'block') {
+        document.getElementById('xo-status').textContent = t.xoStatus.replace('%s', currentPlayer);
+      }
+      
+      updateNotebooksCounter();
+      updateClock();
+      
+      // Update notebook cards
+      document.querySelectorAll('.notebook-card').forEach(card => {
+        const notebookId = card.getAttribute('data-id');
+        const notebook = notebooks.find(n => n.id === notebookId);
+        if (notebook) {
+          card.querySelector('p').textContent = `${t.lastEdit}${notebook.lastEdited}`;
+          card.querySelector('.pin-btn').textContent = notebook.pinned ? t.unpin : t.pin;
+          
+          const dropdown = card.querySelector('.menu-dropdown');
+          dropdown.innerHTML = `
+            <button onclick="showRenameModal('${notebookId}')">${t.rename}</button>
+            <button onclick="togglePinNotebook('${notebookId}')">${notebook.pinned ? t.unpin : t.pin}</button>
+            <button onclick="deleteNotebook('${notebookId}')">${t.delete}</button>
+          `;
+        }
+      });
+    }
+
+    // Close modals when clicking outside
+    window.addEventListener('click', function(event) {
+      if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
+        if (event.target.id === 'search-modal') {
+          clearSearchHighlights();
+          currentSearchIndex = -1;
+          searchResults = [];
+        }
+      }
+    });
+
+    // Close modals with ESC key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        document.querySelectorAll('.modal').forEach(modal => {
+          modal.style.display = 'none';
+        });
+        clearSearchHighlights();
+        currentSearchIndex = -1;
+        searchResults = [];
+        document.getElementById('clock-widget').classList.remove('active');
+      }
+    });
+
+    window.addEventListener('unload', () => {
+      clearInterval(autoSaveInterval);
+      clearInterval(clockInterval);
+    });
+  </script>
+</body>
+</html>
