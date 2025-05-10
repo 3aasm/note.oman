@@ -1110,7 +1110,391 @@
 
     .xo-cell:not(.taken) { animation: cellPop 0.3s ease; }
 
-    /* Responsive Design */
+    /* UNO Game Styles */
+    .uno-container {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .uno-header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .uno-header h1 { 
+      margin: 0; 
+      font-size: 2.5em; 
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    #uno-settings {
+      max-width: 500px;
+      margin: 0 auto 20px;
+      text-align: center;
+      padding: 20px;
+      background: var(--card-bg);
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    #mode-options { margin-bottom: 15px; }
+    #mode-options .mode-option {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 5px;
+      border: 2px solid var(--primary);
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: bold;
+      color: var(--text-color);
+      background-color: var(--bg);
+    }
+    #mode-options .mode-option.active {
+      background-color: var(--primary);
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    }
+    #mode-options input[type="radio"] { display: none; }
+    #uno-settings select,
+    #uno-settings button {
+      margin: 10px 0;
+      padding: 8px 15px;
+      font-size: 1em;
+      border-radius: 5px;
+      border: 1px solid var(--accent);
+      cursor: pointer;
+      background-color: var(--bg);
+      color: var(--text-color);
+    }
+    #uno-settings button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      transition: all 0.3s ease;
+    }
+    #uno-settings button:hover {
+      background-color: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    }
+
+    .game-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .game-button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    #uno-back {
+      background: var(--primary);
+      color: white;
+    }
+    #uno-restart {
+      background: var(--error-color);
+      color: white;
+    }
+    .game-button:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    }
+
+    #uno-hands {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-top: 20px;
+      flex-wrap: nowrap;
+    }
+    #opponent-hand, #player-hand { width: 30%; }
+    #uno-deck-center {
+      width: 30%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    #uno-deck-center > #uno-deck,
+    #uno-deck-center > #uno-discard { margin-bottom: 20px; }
+    #discard-pile {
+      margin: auto;
+      width: var(--card-width);
+      height: var(--card-height);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      border: 3px solid var(--text-color);
+    }
+
+    /* تصميم الأوراق */
+    .uno-card {
+      width: var(--card-width);
+      height: var(--card-height);
+      border-radius: 10px;
+      margin: 5px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      cursor: pointer;
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(145deg, var(--bg), var(--card-bg));
+      border: 3px solid var(--text-color);
+      position: relative;
+      font-size: 1.5em;
+      transition: transform 0.3s ease;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    }
+    .uno-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: rgba(255,255,255,0.4);
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    /* تحديث ألوان الأوراق */
+    .red { background: #ff3131; color: white; }
+    .blue { background: #38b6ff; color: white; }
+    .green { background: #82e100; color: white; }
+    .yellow { background: #f6db12; color: black; }
+    .wild { 
+      background: linear-gradient(145deg, #8e44ad, #c0392b); 
+      color: white; 
+    }
+
+    /* تأثير مرور الماوس على بطاقات اللاعب */
+    .player-card:hover { 
+      transform: translateY(-15px) scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    /* أنيميشن عند الضغط على البطاقة */
+    .animate-select {
+      animation: selectAnimation 0.5s ease-out forwards;
+    }
+    @keyframes selectAnimation {
+      0% { transform: translateX(0); opacity: 1; }
+      100% { transform: translateX(100%) rotate(15deg); opacity: 0; }
+    }
+
+    /* أنيميشنات هادئة عند سحب الأوراق وتغيير اللون */
+    .animate-draw { animation: drawCardAnimation 1.5s ease; }
+    @keyframes drawCardAnimation {
+      0% { transform: translateY(0); opacity: 1; }
+      50% { transform: translateY(-20px); opacity: 0.5; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    .animate-skip { animation: skipAnimation 1.5s ease; }
+    @keyframes skipAnimation {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    .animate-reverse { animation: reverseAnimation 1.5s ease; }
+    @keyframes reverseAnimation {
+      0% { transform: rotateY(0deg); }
+      50% { transform: rotateY(180deg); }
+      100% { transform: rotateY(360deg); }
+    }
+    .animate-wild { animation: wildAnimation 1.5s ease; }
+    @keyframes wildAnimation {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
+    .animate-draw4 { animation: draw4Animation 1.5s ease; }
+    @keyframes draw4Animation {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(20px); }
+      100% { transform: translateX(0); }
+    }
+
+    /* زر "اسحب ورقة" - تم تحسينه */
+    #draw-card {
+      position: relative;
+      width: var(--card-width);
+      height: var(--card-height);
+      background: var(--bg);
+      border: 1px solid var(--accent);
+      border-radius: 10px;
+      font-size: 1em;
+      font-weight: bold;
+      color: var(--text-color);
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    #draw-card:hover { 
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+    #draw-card::before,
+    #draw-card::after {
+      content: "";
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      border-radius: 10px;
+      z-index: -1;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    #draw-card::after { top: -10px; left: -10px; z-index: -2; }
+
+    /* مودال اختيار اللون - تم تحسينه */
+    #colorModal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      backdrop-filter: blur(5px);
+    }
+    #colorModal.active { display: flex; }
+    .modal-content {
+      background: var(--modal-bg);
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      animation: modalFadeIn 0.5s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      max-width: 90%;
+      width: 400px;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .color-options {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .color-option {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 3px solid transparent;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    }
+    .color-option:hover { 
+      transform: scale(1.2);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    .color-option.selected {
+      border: 3px solid var(--text-color);
+      transform: scale(1.1);
+    }
+    .color-option.red { background-color: #ff3131; }
+    .color-option.blue { background-color: #38b6ff; }
+    .color-option.green { background-color: #82e100; }
+    .color-option.yellow { background-color: #f6db12; }
+
+    /* تغطية نهاية اللعبة - تم تحسينها */
+    #endGameOverlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1001;
+      flex-direction: column;
+      backdrop-filter: blur(5px);
+    }
+    #endGameOverlay.active {
+      display: flex;
+      animation: fadeIn 0.5s ease;
+    }
+    .end-message {
+      font-size: 3em;
+      color: white;
+      text-align: center;
+      animation: scaleUp 0.5s ease;
+      margin-bottom: 30px;
+      text-shadow: 0 3px 10px rgba(0,0,0,0.5);
+    }
+    .end-button {
+      padding: 12px 25px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    }
+    .end-button:hover {
+      background: var(--primary-light);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes scaleUp { from { transform: scale(0.5); } to { transform: scale(1); } }
+
+    /* لوحة المعلومات */
+    .game-info {
+      background: var(--card-bg);
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .info-item {
+      text-align: center;
+    }
+    .info-label {
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 5px;
+    }
+    .info-value {
+      font-size: 1.2em;
+      color: var(--text-color);
+    }
+
+    /* استجابة الأجهزة الصغيرة */
     @media (max-width: 768px) {
       header { flex-direction: column; padding: 1rem; }
       nav ul { margin-top: 1rem; flex-wrap: wrap; justify-content: center; }
@@ -1143,6 +1527,36 @@
       .xo-board {
         width: 250px;
         height: 250px;
+      }
+      
+      /* UNO Responsive */
+      :root {
+        --card-width: 70px;
+        --card-height: 100px;
+      }
+      #uno-hands { flex-direction: column; }
+      #opponent-hand, #player-hand, #uno-deck-center { 
+        width: 100%; 
+        margin-bottom: 15px;
+      }
+      .uno-card {
+        width: var(--card-width);
+        height: var(--card-height);
+        font-size: 1em;
+      }
+      .game-buttons {
+        flex-direction: column;
+        gap: 8px;
+      }
+      .game-button {
+        width: 100%;
+      }
+      .color-option {
+        width: 50px;
+        height: 50px;
+      }
+      .end-message {
+        font-size: 2em;
       }
     }
 
@@ -1190,6 +1604,12 @@
         width: 200px;
         height: 200px;
       }
+      
+      /* UNO Responsive */
+      :root {
+        --card-width: 60px;
+        --card-height: 90px;
+      }
     }
   </style>
 </head>
@@ -1225,7 +1645,7 @@
   <header>
     <div class="logo">
       <span class="logo-icon">📔</span>
-      <span>مذكرة</span>
+      <span>مذكرة عمان 🏴‍☠️</span>
     </div>
     <nav>
       <ul>
@@ -1332,13 +1752,19 @@
       <span>←</span> الرجوع
     </button>
     
-    <h1 class="games-title">الألعاب</h1>
+    <h1 class="games-title">استراحة اللعب 🎲🎮</h1>
     
     <div class="games-grid">
       <div class="game-card" onclick="showGame('xo')">
         <div class="game-icon">⭕❌</div>
         <h3 class="game-name">لعبة XO</h3>
         <p class="game-desc">لعبة الذكاء الشهيرة بين لاعبين</p>
+        <button class="play-btn-game">العب الآن</button>
+      </div>
+      <div class="game-card" onclick="showGame('uno')">
+        <div class="game-icon">🃏</div>
+        <h3 class="game-name">لعبة UNO</h3>
+        <p class="game-desc">لعبة الورق الشهيرة</p>
         <button class="play-btn-game">العب الآن</button>
       </div>
     </div>
@@ -1391,6 +1817,106 @@
       <div id="lostOverlay" class="xo-overlay lose">وييو خسرت!🤣❌</div>
       <div id="winOverlay" class="xo-overlay win"> اسسسسسسسلم طلعت لعيب!😎✅</div>
       <div id="drawOverlay" class="xo-overlay draw">تعادل يالحبيب 🤦‍♀️🤦‍♂️🔄!</div>
+    </div>
+  </div>
+
+
+  <!-- UNO Game Container -->
+  <div id="uno-game" class="game-container">
+    <div class="game-header">
+      <h2 class="game-title">لعبة UNO</h2>
+      <button class="back-btn" onclick="showGamesPage()">
+        <span>←</span> العودة للألعاب
+      </button>
+    </div>
+
+    <section id="uno" class="uno-container">
+      <div id="uno-settings">
+        <!-- خيارات نمط اللعب داخل مستطيل -->
+        <div id="mode-options">
+          <label class="mode-option active">
+            <input type="radio" name="uno-mode" value="bot" checked />
+            لعب ضد الحاسوب
+          </label>
+          <label class="mode-option">
+            <input type="radio" name="uno-mode" value="human" />
+            لعب ضد شخص
+          </label>
+        </div>
+        <div id="uno-bot-difficulty">
+          <label>
+            مستوى الحاسوب:
+            <select id="uno-difficulty">
+              <option value="easy">سهل</option>
+              <option value="medium">متوسط</option>
+              <option value="hard">صعب</option>
+            </select>
+          </label>
+        </div>
+        <button id="uno-startGame">ابدأ اللعبة</button>
+      </div>
+      <div id="uno-gameArea" style="display:none;">
+        <div class="game-buttons">
+          <button id="uno-back" class="game-button">رجوع للإعدادات</button>
+          <button id="uno-restart" class="game-button">إعادة تشغيل</button>
+        </div>
+        
+        <div class="game-info">
+          <div class="info-item">
+            <div class="info-label">دور</div>
+            <div class="info-value" id="current-turn">اللاعب 1</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">الاتجاه</div>
+            <div class="info-value" id="game-direction">في اتجاه عقارب الساعة</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">الأوراق المتبقية</div>
+            <div class="info-value" id="deck-count-info">0</div>
+          </div>
+        </div>
+        
+        <div id="uno-hands">
+          <div id="opponent-hand">
+            <h3>يد الخصم (<span id="opponent-card-count">0</span>)</h3>
+            <div id="opponent-cards"></div>
+          </div>
+          <div id="uno-deck-center">
+            <div id="uno-deck">
+              <button id="draw-card">
+                اسحب ورقة (<span id="deck-count"></span>)
+              </button>
+            </div>
+            <div id="uno-discard">
+              <h2>الورقة الحالية</h2>
+              <div id="discard-pile" class="uno-card"></div>
+            </div>
+          </div>
+          <div id="player-hand">
+            <h3>يدك (<span id="player-card-count">0</span>)</h3>
+            <div id="player-cards"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- مودال اختيار اللون -->
+    <div id="colorModal">
+      <div class="modal-content">
+        <h2>اختر لونك</h2>
+        <div class="color-options">
+          <div class="color-option red" data-color="red"></div>
+          <div class="color-option blue" data-color="blue"></div>
+          <div class="color-option green" data-color="green"></div>
+          <div class="color-option yellow" data-color="yellow"></div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- تغطية نهاية اللعبة -->
+    <div id="endGameOverlay">
+      <div class="end-message"></div>
+      <button class="end-button">العودة للقائمة الرئيسية</button>
     </div>
   </div>
 
@@ -1705,6 +2231,458 @@
       setTimeout(() => { drawOverlay.classList.remove("active"); }, 2000);
     }
 
+    // UNO Game Variables and Functions
+    const UNOGame = {
+      deck: [],
+      players: [[], []],
+      discardPile: [],
+      currentPlayer: 0,
+      mode: "bot",
+      difficulty: "easy",
+      direction: 1,
+      gameStarted: false,
+      init() { 
+        this.setupEventListeners();
+      },
+      setupEventListeners() {
+        document.querySelectorAll('#mode-options input[name="uno-mode"]').forEach((radio) => {
+          radio.addEventListener("change", () => {
+            document.querySelectorAll("#mode-options .mode-option").forEach((label) => label.classList.remove("active"));
+            radio.parentElement.classList.add("active");
+            this.mode = radio.value;
+            const botDiff = document.getElementById("uno-bot-difficulty");
+            botDiff.style.display = this.mode === "bot" ? "block" : "none";
+          });
+        });
+        
+        document.getElementById("uno-difficulty").addEventListener("change", (e) => { 
+          this.difficulty = e.target.value; 
+        });
+        
+        document.getElementById("uno-startGame").addEventListener("click", () => { 
+          this.startGame(); 
+        });
+        
+        document.getElementById("draw-card").addEventListener("click", () => {
+          if (this.isCurrentPlayerHuman()) {
+            this.drawCard(this.currentPlayer);
+            this.updateUI();
+            this.nextTurn();
+          }
+        });
+        
+        document.getElementById("uno-back").addEventListener("click", () => { 
+          this.backToSettings(); 
+        });
+        
+        document.getElementById("uno-restart").addEventListener("click", () => {
+          if (confirm("هل تريد إعادة تشغيل اللعبة؟")) {
+            this.startGame();
+          }
+        });
+        
+        document.querySelector("#endGameOverlay .end-button").addEventListener("click", () => {
+          document.getElementById("endGameOverlay").classList.remove("active");
+          this.backToSettings();
+        });
+      },
+      startGame() {
+        this.gameStarted = true;
+        document.getElementById("uno-settings").style.display = "none";
+        document.getElementById("uno-gameArea").style.display = "block";
+        this.deck = this.generateDeck();
+        this.shuffle(this.deck);
+        this.players = [[], []];
+        for (let i = 0; i < 7; i++) {
+          this.players[0].push(this.deck.pop());
+          this.players[1].push(this.deck.pop());
+        }
+        let firstCard = this.deck.pop();
+        // تأكد أن البطاقة الأولى ليست خاصة
+        while (["Wild", "WildDraw4", "+2", "Skip", "Reverse"].includes(firstCard.value)) {
+          this.deck.unshift(firstCard);
+          this.shuffle(this.deck);
+          firstCard = this.deck.pop();
+        }
+        this.discardPile = [firstCard];
+        this.currentPlayer = 0;
+        this.direction = 1;
+        this.updateUI();
+        if (!this.isCurrentPlayerHuman()) {
+          setTimeout(() => this.botMove(), 1000);
+        }
+      },
+      backToSettings() {
+        document.getElementById("uno-settings").style.display = "block";
+        document.getElementById("uno-gameArea").style.display = "none";
+        this.deck = [];
+        this.players = [[], []];
+        this.discardPile = [];
+        this.currentPlayer = 0;
+        this.direction = 1;
+        this.gameStarted = false;
+      },
+      generateDeck() {
+        const colors = ["red", "blue", "green", "yellow"];
+        const numbers = ["0","1","2","3","4","5","6","7","8","9"];
+        const specials = ["Skip", "Reverse", "+2"];
+        let deck = [];
+        colors.forEach((color) => {
+          deck.push({ color: color, value: "0" });
+          for (let i = 1; i < numbers.length; i++) {
+            deck.push({ color: color, value: numbers[i] });
+            deck.push({ color: color, value: numbers[i] });
+          }
+          specials.forEach((special) => {
+            deck.push({ color: color, value: special });
+            deck.push({ color: color, value: special });
+          });
+        });
+        for (let i = 0; i < 4; i++) {
+          deck.push({ color: "wild", value: "Wild" });
+          deck.push({ color: "wild", value: "WildDraw4" });
+        }
+        return deck;
+      },
+      shuffle(deck) {
+        for (let i = deck.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [deck[i], deck[j]] = [deck[j], deck[i]];
+        }
+      },
+      updateUI() {
+        document.getElementById("deck-count").textContent = this.deck.length;
+        document.getElementById("deck-count-info").textContent = this.deck.length;
+        document.getElementById("player-card-count").textContent = this.players[0].length;
+        document.getElementById("opponent-card-count").textContent = this.players[1].length;
+        
+        const topCard = this.discardPile[this.discardPile.length - 1];
+        const discardElem = document.getElementById("discard-pile");
+        discardElem.textContent = topCard.value;
+        discardElem.className = topCard.color === "wild" ? "uno-card wild" : "uno-card " + topCard.color;
+        
+        // تحديث معلومات الدور
+        const turnElem = document.getElementById("current-turn");
+        if (this.mode === "bot") {
+          turnElem.textContent = this.currentPlayer === 0 ? "دورك" : "دور الحاسوب";
+        } else {
+          turnElem.textContent = `دور اللاعب ${this.currentPlayer + 1}`;
+        }
+        
+        // تحديث معلومات الاتجاه
+        const directionElem = document.getElementById("game-direction");
+        directionElem.textContent = this.direction === 1 ? "في اتجاه عقارب الساعة" : "عكس اتجاه عقارب الساعة";
+        
+        const playerCardsDiv = document.getElementById("player-cards");
+        playerCardsDiv.innerHTML = "";
+        this.players[0].forEach((card, index) => {
+          const cardElem = document.createElement("div");
+          cardElem.className = card.color === "wild" ? "uno-card wild player-card" : "uno-card " + card.color + " player-card";
+          cardElem.textContent = card.value;
+          cardElem.addEventListener("click", () => {
+            if (this.isCurrentPlayerHuman()) {
+              cardElem.classList.add("animate-select");
+              setTimeout(() => { this.playCard(0, index); }, 500);
+            }
+          });
+          playerCardsDiv.appendChild(cardElem);
+        });
+        
+        const opponentCardsDiv = document.getElementById("opponent-cards");
+        opponentCardsDiv.innerHTML = "";
+        if (this.mode === "bot") {
+          for (let i = 0; i < this.players[1].length; i++) {
+            const cardElem = document.createElement("div");
+            cardElem.className = "uno-card";
+            cardElem.style.background = "#555";
+            cardElem.textContent = "?";
+            opponentCardsDiv.appendChild(cardElem);
+          }
+        } else {
+          this.players[1].forEach((card) => {
+            const cardElem = document.createElement("div");
+            cardElem.className = card.color === "wild" ? "uno-card wild" : "uno-card " + card.color;
+            cardElem.textContent = card.value;
+            cardElem.addEventListener("click", () => {
+              if (!this.isCurrentPlayerHuman()) {
+                this.playCard(1, this.players[1].indexOf(card));
+              }
+            });
+            opponentCardsDiv.appendChild(cardElem);
+          });
+        }
+      },
+      isCurrentPlayerHuman() {
+        return this.mode === "bot" ? this.currentPlayer === 0 : this.currentPlayer === 0;
+      },
+      getValidMoves(hand) {
+        const topCard = this.discardPile[this.discardPile.length - 1];
+        return hand.map((card, index) => {
+          if (card.color === "wild") return index;
+          return (card.color === topCard.color || card.value === topCard.value) ? index : -1;
+        }).filter((index) => index !== -1);
+      },
+      playCard(playerIndex, cardIndex) {
+        const hand = this.players[playerIndex];
+        const card = hand[cardIndex];
+        const topCard = this.discardPile[this.discardPile.length - 1];
+        
+        if (card.color === "wild" || card.color === topCard.color || card.value === topCard.value) {
+          hand.splice(cardIndex, 1);
+          this.discardPile.push(card);
+          this.updateUI();
+          
+          if (this.checkWin()) return;
+          
+          // معالجة البطاقات الخاصة
+          switch(card.value) {
+            case "+2":
+              this.animatePlusTwo(() => {
+                const opponentIndex = playerIndex === 0 ? 1 : 0;
+                this.drawCard(opponentIndex);
+                this.drawCard(opponentIndex);
+                this.updateUI();
+                this.nextTurn();
+              });
+              return;
+              
+            case "Skip":
+              this.animateSkip(() => { this.nextTurn(); });
+              return;
+              
+            case "Reverse":
+              this.animateReverse(() => {
+                this.direction *= -1;
+                this.nextTurn();
+              });
+              return;
+              
+            case "Wild":
+              this.animateWild(() => {
+                if (this.isCurrentPlayerHuman()) {
+                  // إذا كان اللاعب البشري هو من لعب الورقة، يعرض له خيارات الألوان
+                  showColorSelection().then((chosenColor) => {
+                    this.discardPile[this.discardPile.length - 1].color = chosenColor;
+                    this.updateUI();
+                    this.nextTurn();
+                  });
+                } else {
+                  // إذا كان الخصم (الحاسوب) هو من لعب الورقة، يختار لونًا عشوائيًا
+                  const colors = ["red", "blue", "green", "yellow"];
+                  const chosenColor = colors[Math.floor(Math.random() * colors.length)];
+                  setTimeout(() => {
+                    this.discardPile[this.discardPile.length - 1].color = chosenColor;
+                    this.updateUI();
+                    this.nextTurn();
+                  }, 1000);
+                }
+              });
+              return;
+              
+            case "WildDraw4":
+              this.animateDraw4(() => {
+                if (this.isCurrentPlayerHuman()) {
+                  // إذا كان اللاعب البشري هو من لعب الورقة، يعرض له خيارات الألوان
+                  showColorSelection().then((chosenColor) => {
+                    this.discardPile[this.discardPile.length - 1].color = chosenColor;
+                    const opponentIndex = this.currentPlayer === 0 ? 1 : 0;
+                    for (let i = 0; i < 4; i++) {
+                      this.drawCard(opponentIndex);
+                    }
+                    this.updateUI();
+                    this.nextTurn();
+                  });
+                } else {
+                  // إذا كان الخصم (الحاسوب) هو من لعب الورقة، يختار لونًا عشوائيًا
+                  const colors = ["red", "blue", "green", "yellow"];
+                  const chosenColor = colors[Math.floor(Math.random() * colors.length)];
+                  setTimeout(() => {
+                    this.discardPile[this.discardPile.length - 1].color = chosenColor;
+                    const opponentIndex = this.currentPlayer === 0 ? 1 : 0;
+                    for (let i = 0; i < 4; i++) {
+                      this.drawCard(opponentIndex);
+                    }
+                    this.updateUI();
+                    this.nextTurn();
+                  }, 1000);
+                }
+              });
+              return;
+              
+            default:
+              this.nextTurn();
+          }
+        } else {
+          alert("لا يمكنك لعب هذه البطاقة!");
+        }
+      },
+      drawCard(playerIndex) {
+        if (this.deck.length === 0) {
+          const top = this.discardPile.pop();
+          this.deck = this.discardPile;
+          this.shuffle(this.deck);
+          this.discardPile = [top];
+        }
+        const card = this.deck.pop();
+        this.players[playerIndex].push(card);
+      },
+      nextTurn() {
+        this.currentPlayer = (this.currentPlayer + this.direction + this.players.length) % this.players.length;
+        this.updateUI();
+        
+        if (!this.isCurrentPlayerHuman()) {
+          setTimeout(() => this.botMove(), 1000);
+        }
+      },
+      botMove() {
+        if (!this.gameStarted) return;
+        
+        const hand = this.players[1];
+        const validMoves = this.getValidMoves(hand);
+        
+        if (validMoves.length > 0) {
+          let chosenIndex;
+          
+          if (this.difficulty === "easy") {
+            chosenIndex = validMoves[Math.floor(Math.random() * validMoves.length)];
+          } 
+          else if (this.difficulty === "medium") {
+            // استراتيجية متوسطة: تفضيل البطاقات الخاصة
+            const specialCards = validMoves.filter(index => 
+              ["+2", "Skip", "Reverse", "Wild", "WildDraw4"].includes(hand[index].value)
+            );
+            chosenIndex = specialCards.length > 0 
+              ? specialCards[Math.floor(Math.random() * specialCards.length)]
+              : validMoves[Math.floor(Math.random() * validMoves.length)];
+          }
+          else { // صعبة
+            // استراتيجية صعبة: تفضيل تغيير اللون إلى الأكثر شيوعًا
+            let colorCount = { red: 0, blue: 0, green: 0, yellow: 0 };
+            hand.forEach((card) => { 
+              if (card.color in colorCount) colorCount[card.color]++;
+            });
+            
+            // تفضيل البطاقات التي تسبب ضررًا للخصم
+            const harmfulCards = validMoves.filter(index => 
+              ["+2", "Skip", "WildDraw4"].includes(hand[index].value)
+            );
+            
+            if (harmfulCards.length > 0) {
+              chosenIndex = harmfulCards[0];
+            } else {
+              chosenIndex = validMoves[0];
+              let maxCount = -1;
+              validMoves.forEach((index) => {
+                const card = hand[index];
+                if (card.color in colorCount && colorCount[card.color] > maxCount) {
+                  maxCount = colorCount[card.color];
+                  chosenIndex = index;
+                }
+              });
+            }
+          }
+          
+          this.playCard(1, chosenIndex);
+        } else {
+          this.drawCard(1);
+          this.updateUI();
+          const newValid = this.getValidMoves(this.players[1]);
+          if (newValid.length > 0) {
+            setTimeout(() => this.botMove(), 1000);
+          } else {
+            this.nextTurn();
+          }
+        }
+      },
+      checkWin() {
+        if (this.players[0].length === 0) {
+          this.endGame("player");
+          return true;
+        } else if (this.players[1].length === 0) {
+          this.endGame("opponent");
+          return true;
+        }
+        return false;
+      },
+      endGame(winner) {
+        let message = "";
+        if (this.mode === "bot") {
+          message = winner === "player" ? "🎉 لعيب ماشاءالله! 😂" : " 🥱عوافي المرة الجاية! ";
+        } else {
+          message = winner === "player" ? "🎉 فاز اللاعب 1! 🎉" : "🎉 فاز اللاعب 2! 🎉";
+        }
+        const overlay = document.getElementById("endGameOverlay");
+        const endMessageDiv = overlay.querySelector(".end-message");
+        endMessageDiv.textContent = message;
+        overlay.classList.add("active");
+      },
+      animatePlusTwo(callback) {
+        const opponentCardsDiv = document.getElementById("opponent-cards");
+        opponentCardsDiv.classList.add("animate-draw");
+        setTimeout(() => {
+          opponentCardsDiv.classList.remove("animate-draw");
+          callback();
+        }, 1500);
+      },
+      animateSkip(callback) {
+        const discardElem = document.getElementById("discard-pile");
+        discardElem.classList.add("animate-skip");
+        setTimeout(() => {
+          discardElem.classList.remove("animate-skip");
+          callback();
+        }, 1500);
+      },
+      animateReverse(callback) {
+        const discardElem = document.getElementById("discard-pile");
+        discardElem.classList.add("animate-reverse");
+        setTimeout(() => {
+          discardElem.classList.remove("animate-reverse");
+          callback();
+        }, 1500);
+      },
+      animateWild(callback) {
+        const discardElem = document.getElementById("discard-pile");
+        discardElem.classList.add("animate-wild");
+        setTimeout(() => {
+          discardElem.classList.remove("animate-wild");
+          callback();
+        }, 1500);
+      },
+      animateDraw4(callback) {
+        const discardElem = document.getElementById("discard-pile");
+        discardElem.classList.add("animate-draw4");
+        setTimeout(() => {
+          discardElem.classList.remove("animate-draw4");
+          callback();
+        }, 1500);
+      }
+    };
+
+    function showColorSelection() {
+      return new Promise((resolve) => {
+        const modal = document.getElementById("colorModal");
+        modal.classList.add("active");
+        const options = modal.querySelectorAll(".color-option");
+        
+        // إزالة التحديد السابق
+        options.forEach(opt => opt.classList.remove("selected"));
+        
+        options.forEach((option) => {
+          option.onclick = function () {
+            // إضافة تأثير التحديد
+            options.forEach(opt => opt.classList.remove("selected"));
+            this.classList.add("selected");
+            
+            setTimeout(() => {
+              const selectedColor = this.getAttribute("data-color");
+              modal.classList.remove("active");
+              resolve(selectedColor);
+            }, 300);
+          };
+        });
+      });
+    }
+
     // Load saved notebooks and content on page load
     window.onload = function() {
       const savedDarkMode = localStorage.getItem('darkMode') === 'true';
@@ -1740,6 +2718,9 @@
         updateScoreDisplay();
       }
       renderBoard();
+      
+      // Initialize UNO game
+      UNOGame.init();
       
       // Clock widget click handler
       document.getElementById('clock-widget').addEventListener('click', function(e) {
@@ -1784,6 +2765,9 @@
       if (game === 'xo') {
         document.getElementById('xo-game').style.display = 'block';
         newGame();
+      } else if (game === 'uno') {
+        document.getElementById('uno-game').style.display = 'block';
+        UNOGame.backToSettings();
       }
     }
 
@@ -1793,6 +2777,7 @@
       document.getElementById('editor-container').style.display = 'none';
       document.getElementById('games-page').style.display = 'none';
       document.getElementById('xo-game').style.display = 'none';
+      document.getElementById('uno-game').style.display = 'none';
     }
 
     function showLoading(show) {
@@ -2129,6 +3114,11 @@
       // Close clock settings when clicking outside
       if (!e.target.closest('#clock-widget')) {
         document.getElementById('clock-widget').classList.remove('active');
+      }
+      
+      // Close color modal when clicking outside
+      if (!e.target.closest('#colorModal') && e.target.id !== 'colorModal') {
+        document.getElementById('colorModal').classList.remove('active');
       }
     });
 
@@ -2500,7 +3490,29 @@
         xoStatus: 'دور اللاعب %s',
         xoWin: 'فاز اللاعب %s!',
         xoDraw: 'تعادل!',
-        xoStart: 'ابدأ اللعبة!'
+        xoStart: 'ابدأ اللعبة!',
+        unoGame: 'لعبة UNO',
+        unoStart: 'ابدأ اللعبة',
+        unoRestart: 'إعادة تشغيل',
+        unoMode: 'وضع اللعبة',
+        unoBot: 'ضد الحاسوب',
+        unoHuman: 'ضد شخص',
+        unoDifficulty: 'مستوى الحاسوب',
+        unoEasy: 'سهل',
+        unoMedium: 'متوسط',
+        unoHard: 'صعب',
+        unoYourTurn: 'دورك',
+        unoBotTurn: 'دور الحاسوب',
+        unoPlayerTurn: 'دور اللاعب %d',
+        unoClockwise: 'في اتجاه عقارب الساعة',
+        unoCounterClockwise: 'عكس اتجاه عقارب الساعة',
+        unoCardsLeft: 'الأوراق المتبقية',
+        unoCurrentCard: 'الورقة الحالية',
+        unoDrawCard: 'اسحب ورقة',
+        unoChooseColor: 'اختر لونك',
+        unoWin: '🎉 فزت! 🎉',
+        unoLose: '😢 خسرت! 😢',
+        unoPlayerWin: '🎉 فاز اللاعب %d! 🎉'
       },
       en: {
         logo: 'Notebook',
@@ -2544,7 +3556,29 @@
         xoStatus: 'Player %s turn',
         xoWin: 'Player %s wins!',
         xoDraw: 'Draw!',
-        xoStart: 'Start the game!'
+        xoStart: 'Start the game!',
+        unoGame: 'UNO Game',
+        unoStart: 'Start Game',
+        unoRestart: 'Restart',
+        unoMode: 'Game Mode',
+        unoBot: 'vs Computer',
+        unoHuman: 'vs Human',
+        unoDifficulty: 'Bot Difficulty',
+        unoEasy: 'Easy',
+        unoMedium: 'Medium',
+        unoHard: 'Hard',
+        unoYourTurn: 'Your Turn',
+        unoBotTurn: 'Computer Turn',
+        unoPlayerTurn: 'Player %d Turn',
+        unoClockwise: 'Clockwise',
+        unoCounterClockwise: 'Counter-Clockwise',
+        unoCardsLeft: 'Cards Left',
+        unoCurrentCard: 'Current Card',
+        unoDrawCard: 'Draw Card',
+        unoChooseColor: 'Choose Your Color',
+        unoWin: '🎉 You Win! 🎉',
+        unoLose: '😢 You Lose! 😢',
+        unoPlayerWin: '🎉 Player %d Wins! 🎉'
       }
     };
 
@@ -2606,11 +3640,27 @@
       // Update games page
       document.querySelector('.games-title').textContent = t.gamesTitle;
       document.querySelectorAll('.game-card')[0].querySelector('.game-name').textContent = t.xoGame;
+      document.querySelectorAll('.game-card')[1].querySelector('.game-name').textContent = t.unoGame;
       document.querySelectorAll('.play-btn-game').forEach(btn => btn.textContent = t.play);
       
       // Update XO game
       if (document.getElementById('xo-game').style.display === 'block') {
         document.getElementById('xo-status').textContent = t.xoStatus.replace('%s', currentPlayer);
+      }
+      
+      // Update UNO game
+      if (document.getElementById('uno-game').style.display === 'block') {
+        document.getElementById('uno-startGame').textContent = t.unoStart;
+        document.getElementById('uno-restart').textContent = t.unoRestart;
+        document.querySelector('#mode-options .mode-option:nth-child(1)').textContent = t.unoBot;
+        document.querySelector('#mode-options .mode-option:nth-child(2)').textContent = t.unoHuman;
+        document.querySelector('#uno-bot-difficulty label').textContent = t.unoDifficulty;
+        document.querySelector('#uno-difficulty option[value="easy"]').textContent = t.unoEasy;
+        document.querySelector('#uno-difficulty option[value="medium"]').textContent = t.unoMedium;
+        document.querySelector('#uno-difficulty option[value="hard"]').textContent = t.unoHard;
+        document.querySelector('#uno-discard h2').textContent = t.unoCurrentCard;
+        document.querySelector('#draw-card').innerHTML = `${t.unoDrawCard} (<span id="deck-count"></span>)`;
+        document.querySelector('#colorModal h2').textContent = t.unoChooseColor;
       }
       
       updateNotebooksCounter();
@@ -2656,6 +3706,7 @@
         currentSearchIndex = -1;
         searchResults = [];
         document.getElementById('clock-widget').classList.remove('active');
+        document.getElementById('colorModal').classList.remove('active');
       }
     });
 
