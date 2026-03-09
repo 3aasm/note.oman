@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>مفكرتي - My Notebook</title>
+
+    <!-- Google Fonts: Tajawal -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            500: '#10b981',
+                        },
+                        graybase: '#1f2937', // Tailwind Gray-800
+                        panelbase: 'rgba(31, 41, 55, 0.4)',
+                    },
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #1f2937;
+            /* Default gray background */
+            color: white;
+            overflow: hidden;
+            touch-action: pan-y;
+            transition: background-image 0.5s ease-in-out, background-color 0.5s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .bg-grid {
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        .glass-panel {
+            background: var(--tw-colors-panelbase);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .brutalist-badge {
+            background: #374151;
+            /* Gray-700 */
+            border: 1px solid #4b5563;
+            /* Gray-600 */
+            box-shadow: 3px 3px 0px #10b981;
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .brutalist-badge:active {
+            transform: translate(3px, 3px);
+            box-shadow: 0px 0px 0px #10b981;
+        }
+
+        .shimmer-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shimmer-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transform: skewX(-20deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                left: -150%;
+            }
+
+            50% {
+                left: 200%;
+            }
+
+            100% {
+                left: 200%;
+            }
+        }
+
+        .checkbox-glass {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .checkbox-pulse {
+            animation: pulse-green 0.5s ease-out;
+        }
+
+        @keyframes pulse-green {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
+            }
+
+            50% {
+                box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        .smooth-scroll {
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .toggle-thumb {
+            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Sub-page transition classes */
+        .subpage {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: translateX(-100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 40;
+            background: inherit;
+        }
+
+        .subpage.active {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-emerald-500/30 selection:text-emerald-200">
+
+    <div class="fixed inset-0 z-[-1] pointer-events-none overflow-hidden" id="app-background-container">
+        <!-- Optional overlay for blur if needed by background -->
+        <div id="bg-blur-overlay"
+            class="absolute inset-0 bg-gray-900/80 backdrop-blur-3xl transition-all duration-500 opacity-0"></div>
+
+        <div class="absolute inset-0 bg-grid"></div>
+        <div id="glow-orb-1"
+            class="absolute -top-32 -right-32 w-96 h-96 bg-emerald-500/10 rounded-full blur-[100px] animate-pulse transition-opacity duration-500"
+            style="animation-duration: 4s;"></div>
+        <div id="glow-orb-2"
+            class="absolute -bottom-32 -left-32 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] animate-pulse transition-opacity duration-500"
+            style="animation-duration: 6s; animation-delay: 1s;"></div>
+        <div
+            class="absolute top-1/4 -left-1/4 w-[150%] h-[40%] bg-gradient-to-r from-white/[0.02] to-transparent transform -skew-y-12 backdrop-blur-[2px]">
+        </div>
+    </div>
+
+    <main
+        class="h-[100dvh] w-full max-w-4xl mx-auto flex flex-col relative sm:border-x sm:border-white/10 sm:shadow-2xl overflow-hidden bg-gray-900/40">
+
+        <!-- Header (ONLY VISIBLE ON DASHBOARD NOW) -->
+        <header id="main-header"
+            class="p-4 pt-8 flex justify-between items-center shrink-0 z-10 transition-all duration-300">
+
+            <!-- Right side: Stats (Active) -->
+            <div class="flex flex-col items-start gap-1">
+                <span class="text-gray-400 text-[10px] font-bold tracking-wide">المهام النشطة</span>
+                <span id="stat-total"
+                    class="text-xl font-black text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">0</span>
+            </div>
+
+            <!-- Center: Welcome & Profile -->
+            <div class="flex flex-col items-center gap-2">
+                <button onclick="alert('ملف التعريف الشخصي (ميزة قادمة)')"
+                    class="w-10 h-10 rounded-full flex items-center justify-center bg-white/5 border border-white/10 hover:bg-white/10 transition-colors active:scale-95 shadow-sm">
+                    <i class="fa-solid fa-user text-emerald-400 drop-shadow-[0_0_5px_rgba(16,185,129,0.5)]"></i>
+                </button>
+                <div class="cursor-default select-none">
+                    <h1 class="text-xs font-bold text-white tracking-wide flex items-center justify-center gap-1">
+                        مرحباً بك <span class="animate-bounce"
+                            style="animation-duration: 2s; display: inline-block;">👋</span>
+                    </h1>
+                </div>
+            </div>
+
+            <!-- Left side: Stats (Completed) -->
+            <div class="flex flex-col items-end gap-1">
+                <span class="text-emerald-400/80 text-[10px] font-bold tracking-wide">المنجزة</span>
+                <span id="stat-completed"
+                    class="text-xl font-black text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">0</span>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto hide-scrollbar smooth-scroll px-6 pb-32 z-10 w-full relative">
+
+            <!-- VIEW: DASHBOARD -->
+            <div id="view-dashboard" class="view-section block pt-2">
+                <section class="block mt-4">
+
+                    <section class="block">
+                        <div class="flex justify-between items-center mb-5">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-list-check text-emerald-500 text-sm"></i>
+                                <h2 class="text-white/80 text-sm font-bold tracking-wider">أهم المهام قيد التنفيذ</h2>
+                            </div>
+                            <button onclick="switchView('tasks')"
+                                class="text-xs font-bold text-emerald-400 hover:text-emerald-300 drop-shadow-[0_0_5px_rgba(16,185,129,0.4)] px-2 py-1 bg-white/5 rounded-lg border border-white/5 active:scale-95">عرض
+                                الكل</button>
+                        </div>
+
+                        <div id="dashboard-tasks-list" class="flex flex-col gap-4">
+                            <!-- Only uncompleted tasks dynamically injected here -->
+                        </div>
+                    </section>
+            </div>
+
+            <!-- VIEW: ALL TASKS -->
+            <div id="view-tasks" class="view-section hidden pt-4">
+                <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group text-emerald-500 text-sm"></i>
+                        <h2 class="text-white/80 text-lg font-bold tracking-wider">المهام النشطة</h2>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <button onclick="openSubpage('tasks-archive')"
+                            class="flex items-center justify-center w-10 h-10 border border-white/10 bg-white/5 text-gray-400 hover:text-emerald-400 rounded-xl transition-all active:scale-95 shadow-sm"
+                            title="أرشيف المهام المنجزة">
+                            <i class="fa-solid fa-box-archive"></i>
+                        </button>
+                        <button onclick="openTaskModal()"
+                            class="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-gray-900 font-bold px-3 py-2 rounded-xl text-sm transition-all active:scale-95 shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+                            <i class="fa-solid fa-plus"></i> إضافة مهمة
+                        </button>
+                    </div>
+                </div>
+
+                <div id="all-tasks-list" class="flex flex-col gap-4">
+                    <!-- Tasks dynamically injected here -->
+                </div>
+            </div>
+
+            <!-- VIEW: NOTES -->
+            <div id="view-notes" class="view-section hidden pt-4">
+                <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-book-open text-emerald-500 text-sm"></i>
+                        <h2 class="text-white/80 text-lg font-bold tracking-wider">ملاحظاتك السريعة</h2>
+                    </div>
+                    <!-- Right side archive and add buttons -->
+                    <div class="flex gap-2">
+                        <button onclick="openSubpage('notes-archive')"
+                            class="flex items-center justify-center w-10 h-10 border border-white/10 bg-white/5 text-gray-400 hover:text-emerald-400 rounded-xl transition-all active:scale-95 shadow-sm"
+                            title="أرشيف الملاحظات">
+                            <i class="fa-solid fa-box-archive"></i>
+                        </button>
+                        <button onclick="openNoteModal()"
+                            class="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-gray-900 font-bold px-3 py-2 rounded-xl text-sm transition-all active:scale-95 shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+                            <i class="fa-solid fa-plus"></i> إضافة جديد
+                        </button>
+                    </div>
+                </div>
+
+                <div id="active-notes-list" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Dynamic Notes Injection -->
+                </div>
+            </div>
+
+            <!-- VIEW: SETTINGS -->
+            <div id="view-settings" class="view-section hidden pt-4">
+                <div class="flex justify-between items-center mb-5 border-b border-white/10 pb-4">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-gear text-emerald-500 text-sm"></i>
+                        <h2 class="text-white/80 text-lg font-bold tracking-wider">الإعدادات</h2>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl flex flex-col gap-6 bg-gray-800/40">
+
+                    <button onclick="openSubpage('wallpaper-settings')"
+                        class="flex justify-between items-center border-b border-white/10 pb-5 text-right w-full group active:scale-[0.98] transition-all">
+                        <div class="flex gap-3 items-center">
+                            <div
+                                class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex justify-center items-center">
+                                <i class="fa-solid fa-image"></i>
+                            </div>
+                            <span class="text-white font-medium">الخلفية والمظهر</span>
+                        </div>
+                        <i
+                            class="fa-solid fa-chevron-left text-gray-500 group-hover:text-emerald-400 transition-colors"></i>
+                    </button>
+
+                    <!-- Glow Toggle -->
+                    <div class="flex justify-between items-center border-b border-white/10 pb-5">
+                        <div class="flex gap-3 items-center">
+                            <div
+                                class="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 flex justify-center items-center">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            </div>
+                            <span class="text-white font-medium">الوضع الليلي المتوهج</span>
+                        </div>
+                        <div id="glow-toggle-btn" onclick="toggleSetting('glow')"
+                            class="w-12 h-6 bg-emerald-500 rounded-full relative cursor-pointer shadow-[0_0_10px_rgba(16,185,129,0.3)] transition-colors duration-300">
+                            <div id="glow-toggle-thumb"
+                                class="w-5 h-5 bg-white rounded-full absolute top-0.5 right-[26px] toggle-thumb shadow-sm">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notifications Toggle -->
+                    <div class="flex justify-between items-center border-b border-white/10 pb-5">
+                        <div class="flex gap-3 items-center">
+                            <div
+                                class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-400 flex justify-center items-center">
+                                <i class="fa-solid fa-bell" id="notif-icon"></i>
+                            </div>
+                            <span class="text-white font-medium">الإشعارات</span>
+                        </div>
+                        <div id="notif-toggle-btn" onclick="toggleSetting('notif')"
+                            class="w-12 h-6 bg-white/20 rounded-full relative cursor-pointer transition-colors duration-300">
+                            <div id="notif-toggle-thumb"
+                                class="w-5 h-5 bg-white rounded-full absolute top-0.5 right-[2px] toggle-thumb shadow-sm">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Delete Data -->
+                    <button onclick="clearAllData()"
+                        class="flex items-center justify-center gap-2 bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 rounded-xl transition-all py-3 font-bold mt-2 active:scale-95">
+                        <i class="fa-solid fa-trash"></i> مسح جميع البيانات نهائياً
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="fixed bottom-0 left-0 right-0 w-full max-w-4xl mx-auto z-[35] px-6 pb-6 pt-2 pointer-events-none">
+        <div
+            class="glass-panel bg-gray-800/90 rounded-2xl flex justify-around items-center p-2 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] border-white/10 relative overflow-hidden pointer-events-auto backdrop-blur-3xl">
+
+            <button onclick="switchView('dashboard')" data-target="dashboard"
+                class="nav-btn relative flex flex-col items-center gap-1 p-2 w-16 group">
+                <i
+                    class="fa-solid fa-house text-xl text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.6)] group-active:scale-90 transition-transform"></i>
+                <div
+                    class="nav-indicator absolute -bottom-1 w-1.5 h-1.5 bg-emerald-400 rounded-full shadow-[0_0_8px_rgba(16,185,129,1)]">
+                </div>
+            </button>
+
+            <button onclick="switchView('tasks')" data-target="tasks"
+                class="nav-btn relative flex flex-col items-center gap-1 p-2 w-16 group">
+                <i
+                    class="fa-solid fa-list-check text-xl text-gray-400 group-hover:text-white transition-colors group-active:scale-90 duration-200"></i>
+                <div
+                    class="nav-indicator hidden absolute -bottom-1 w-1.5 h-1.5 bg-emerald-400 rounded-full shadow-[0_0_8px_rgba(16,185,129,1)]">
+                </div>
+            </button>
+
+            <button onclick="switchView('notes')" data-target="notes"
+                class="nav-btn relative flex flex-col items-center gap-1 p-2 w-16 group">
+                <i
+                    class="fa-solid fa-book-open text-xl text-gray-400 group-hover:text-white transition-colors group-active:scale-90 duration-200"></i>
+                <div
+                    class="nav-indicator hidden absolute -bottom-1 w-1.5 h-1.5 bg-emerald-400 rounded-full shadow-[0_0_8px_rgba(16,185,129,1)]">
+                </div>
+            </button>
+
+            <button onclick="switchView('settings')" data-target="settings"
+                class="nav-btn relative flex flex-col items-center gap-1 p-2 w-16 group">
+                <i
+                    class="fa-solid fa-gear text-xl text-gray-400 group-hover:text-white transition-colors group-active:scale-90 duration-200"></i>
+                <div
+                    class="nav-indicator hidden absolute -bottom-1 w-1.5 h-1.5 bg-emerald-400 rounded-full shadow-[0_0_8px_rgba(16,185,129,1)]">
+                </div>
+            </button>
+        </div>
+    </nav>
+
+
+    <!-- ================= SUB-PAGES (OVERLAYS) ================= -->
+
+    <!-- SUBPAGE: Wallpaper Settings -->
+    <div id="subpage-wallpaper-settings"
+        class="subpage bg-gray-900/90 backdrop-blur-2xl px-6 pb-32 pt-10 overflow-y-auto">
+        <div class="flex items-center gap-4 mb-8">
+            <button onclick="closeSubpage('wallpaper-settings')"
+                class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex justify-center items-center text-gray-400 hover:text-white active:scale-95 transition-all">
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <h2 class="text-xl font-bold text-white tracking-wide">تخصيص الخلفية</h2>
+        </div>
+
+        <div class="space-y-6">
+            <div>
+                <h3 class="text-white/70 text-sm font-medium mb-3">الأنماط الجاهزة</h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="setSystemWallpaper('default')"
+                        class="h-24 rounded-xl border border-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)] bg-[#1f2937] flex flex-col justify-center items-center gap-2 group relative overflow-hidden text-emerald-400 transition-all">
+                        <i class="fa-solid fa-check"></i>
+                        <span class="text-sm font-bold">التلقائي</span>
+                    </button>
+                    <button onclick="setSystemWallpaper('abyss')"
+                        class="h-24 rounded-xl border border-white/10 hover:border-white/30 bg-gradient-to-br from-[#0f172a] to-[#020617] flex flex-col justify-center items-center gap-2 text-white/70 hover:text-white transition-all">
+                        <span class="text-sm font-bold">الهاوية المظلمة</span>
+                    </button>
+                    <button onclick="setSystemWallpaper('forest')"
+                        class="h-24 rounded-xl border border-white/10 hover:border-white/30 bg-gradient-to-br from-[#064e3b] to-[#022c22] flex flex-col justify-center items-center gap-2 text-white/70 hover:text-white transition-all">
+                        <span class="text-sm font-bold">الغابة العميقة</span>
+                    </button>
+                    <button onclick="setSystemWallpaper('ocean')"
+                        class="h-24 rounded-xl border border-white/10 hover:border-white/30 bg-gradient-to-br from-[#1e3a8a] to-[#172554] flex flex-col justify-center items-center gap-2 text-white/70 hover:text-white transition-all">
+                        <span class="text-sm font-bold">المحيط</span>
+                    </button>
+                    <button onclick="setSystemWallpaper('sunset')"
+                        class="h-24 rounded-xl border border-white/10 hover:border-white/30 bg-gradient-to-br from-[#7f1d1d] to-[#450a0a] flex flex-col justify-center items-center gap-2 text-white/70 hover:text-white transition-all">
+                        <span class="text-sm font-bold">الغروب الداكن</span>
+                    </button>
+                    <button onclick="setSystemWallpaper('purple')"
+                        class="h-24 rounded-xl border border-white/10 hover:border-white/30 bg-gradient-to-br from-[#581c87] to-[#3b0764] flex flex-col justify-center items-center gap-2 text-white/70 hover:text-white transition-all">
+                        <span class="text-sm font-bold">السديم</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 pt-6">
+                <h3 class="text-white/70 text-sm font-medium mb-3">خلفية مخصصة</h3>
+                <p class="text-xs text-gray-400 mb-4">* يفضل اختيار عرض الصور المخصصة بوضع <span
+                        class="text-emerald-400 font-bold">"ضبابي (Blur)"</span> لضمان وضوح النصوص والقراءة المريحة
+                    للعين.</p>
+
+                <input type="file" id="custom-bg-input" accept="image/*" class="hidden"
+                    onchange="handleCustomWallpaperUpload(event)">
+
+                <div class="flex gap-3">
+                    <button onclick="document.getElementById('custom-bg-input').click()"
+                        class="flex-1 bg-white/5 border border-white/20 hover:bg-white/10 text-white font-bold py-3 rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-folder-open text-emerald-400"></i> اختيار من الجهاز
+                    </button>
+                </div>
+
+                <div
+                    class="mt-4 flex items-center justify-between bg-white/[0.03] p-4 rounded-xl border border-white/5">
+                    <span class="text-sm font-medium text-white">تأثير الضبابية للخلفية المخصصة</span>
+                    <div id="blur-toggle-btn" onclick="toggleBlurSetting()"
+                        class="w-12 h-6 bg-emerald-500 rounded-full relative cursor-pointer shadow-[0_0_10px_rgba(16,185,129,0.3)] transition-colors duration-300">
+                        <div id="blur-toggle-thumb"
+                            class="w-5 h-5 bg-white rounded-full absolute top-0.5 right-[26px] toggle-thumb shadow-sm">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- SUBPAGE: Tasks Archive -->
+    <div id="subpage-tasks-archive" class="subpage bg-gray-900/95 backdrop-blur-2xl px-6 pb-32 pt-10 overflow-y-auto">
+        <div class="flex items-center gap-4 mb-8">
+            <button onclick="closeSubpage('tasks-archive')"
+                class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex justify-center items-center text-gray-400 hover:text-white active:scale-95 transition-all">
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <h2 class="text-xl font-bold text-white tracking-wide">أرشيف المهام المنجزة</h2>
+        </div>
+
+        <div id="archived-tasks-list" class="flex flex-col gap-3">
+            <!-- Archived tasks injected here -->
+        </div>
+    </div>
+
+
+    <!-- SUBPAGE: Notes Archive -->
+    <div id="subpage-notes-archive" class="subpage bg-gray-900/95 backdrop-blur-2xl px-6 pb-32 pt-10 overflow-y-auto">
+        <div class="flex items-center gap-4 mb-8 border-b border-white/10 pb-4">
+            <button onclick="closeSubpage('notes-archive')"
+                class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex justify-center items-center text-gray-400 hover:text-white active:scale-95 transition-all">
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <h2 class="text-xl font-bold text-white tracking-wide">أرشيف الملاحظات</h2>
+        </div>
+
+        <div id="archived-notes-list" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Archived notes injected here -->
+        </div>
+    </div>
+
+
+    <!-- ================= MODALS ================= -->
+
+    <!-- Modal: Add/Edit Task -->
+    <div id="addTaskModal"
+        class="fixed inset-0 z-50 hidden flex-col justify-end sm:justify-center items-center backdrop-blur-md bg-gray-900/80 transition-opacity duration-300 opacity-0 sm:overflow-hidden">
+        <div class="absolute inset-0 z-0 cursor-pointer" onclick="closeTaskModal()"></div>
+
+        <div id="taskModalContent"
+            class="glass-panel bg-gray-800 w-full sm:w-[400px] rounded-t-3xl sm:rounded-3xl p-7 relative z-10 transform translate-y-full sm:translate-y-0 sm:scale-95 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] border-t border-emerald-500/30 flex flex-col">
+            <div class="w-12 h-1.5 flex-shrink-0 bg-white/20 rounded-full mx-auto mb-6 sm:hidden cursor-pointer"
+                onclick="closeTaskModal()"></div>
+
+            <h2 class="text-2xl font-bold text-white mb-6 tracking-wide drop-shadow-sm">إضافة <span
+                    class="text-emerald-400">مهمة</span></h2>
+
+            <div class="space-y-5">
+                <div class="relative">
+                    <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+                        <i class="fa-solid fa-pen text-gray-400"></i>
+                    </div>
+                    <input type="text" id="newTaskTitle" placeholder="ما الذي تريد إنجازه؟"
+                        class="w-full bg-white/[0.05] border border-white/10 rounded-xl pr-12 pl-4 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/50 transition-all">
+                </div>
+
+                <div class="flex gap-4">
+                    <div class="relative w-1/2">
+                        <input type="time" id="newTaskTime"
+                            class="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-emerald-500/50 transition-all [color-scheme:dark]">
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="saveTask()"
+                class="w-full mt-8 bg-emerald-500 hover:bg-emerald-400 text-gray-900 font-bold text-lg py-4 rounded-xl transition-all shadow-[0_0_15px_rgba(16,185,129,0.2)] active:scale-95 shimmer-btn">
+                حفظ المهمة المنجزة
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal: Add/Edit/View Note -->
+    <div id="addNoteModal"
+        class="fixed inset-0 z-50 hidden flex-col justify-end sm:justify-center items-center backdrop-blur-md bg-gray-900/80 transition-opacity duration-300 opacity-0 sm:overflow-hidden">
+        <div class="absolute inset-0 z-0 cursor-pointer" onclick="closeNoteModal()"></div>
+
+        <div id="noteModalContent"
+            class="glass-panel bg-gray-800 w-full sm:w-[450px] rounded-t-3xl sm:rounded-3xl p-6 relative z-10 transform translate-y-full sm:translate-y-0 sm:scale-95 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] border-t border-emerald-500/30 flex flex-col h-[80vh] sm:h-auto">
+            <div class="w-12 h-1.5 flex-shrink-0 bg-white/20 rounded-full mx-auto mb-4 sm:hidden cursor-pointer"
+                onclick="closeNoteModal()"></div>
+
+            <div class="flex justify-between items-center mb-4">
+                <input type="text" id="currentNoteTitle" placeholder="عنوان الملاحظة (اختياري)"
+                    class="bg-transparent border-none text-xl font-bold text-emerald-400 placeholder-emerald-400/50 focus:outline-none w-full">
+                <!-- Check button to archive -->
+                <button id="archive-note-btn" onclick="archiveCurrentNote()"
+                    class="hidden w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-gray-900 active:scale-95 transition-all shrink-0 flex items-center justify-center transform tooltip"
+                    title="إرسال للأرشيف">
+                    <i class="fa-solid fa-check text-lg"></i>
+                </button>
+            </div>
+
+            <textarea id="currentNoteContent" placeholder="اكتب ملاحظاتك بحرية هنا..."
+                class="flex-1 w-full bg-white/[0.03] border border-white/10 rounded-xl p-4 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500/30 transition-all resize-none mb-4"></textarea>
+
+            <div class="flex justify-between gap-3">
+                <button id="delete-note-btn" onclick="deleteCurrentNote()"
+                    class="hidden w-12 bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white border border-red-500/20 rounded-xl transition-all active:scale-95 flex items-center justify-center">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+                <button onclick="saveCurrentNote()"
+                    class="flex-1 bg-emerald-500 hover:bg-emerald-400 text-gray-900 font-bold text-lg py-3 rounded-xl transition-all shadow-sm active:scale-95">
+                    حفظ الملاحظة
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Custom Confirm -->
+    <div id="confirmModal"
+        class="fixed inset-0 z-[60] hidden flex-col justify-center items-center backdrop-blur-md bg-gray-900/80 transition-opacity duration-300 opacity-0 px-6">
+        <div
+            class="glass-panel bg-gray-800 w-full max-w-sm rounded-3xl p-6 relative border-t border-red-500/30 flex flex-col items-center text-center transform scale-95 transition-all duration-300 shadow-2xl">
+            <div
+                class="w-16 h-16 rounded-full bg-red-500/10 text-red-500 flex items-center justify-center text-3xl mb-4 shadow-[0_0_15px_rgba(239,68,68,0.2)]">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">تأكيد الإجراء</h3>
+            <p id="confirmMessageText" class="text-gray-300 text-sm mb-6 leading-relaxed"></p>
+            <div class="flex gap-3 w-full">
+                <button onclick="closeConfirmModal()"
+                    class="flex-1 bg-white/5 hover:bg-white/10 text-white font-bold py-3 rounded-xl transition-all active:scale-95 border border-white/10">
+                    إلغاء
+                </button>
+                <button id="confirmActionBtn"
+                    class="flex-1 bg-red-500 hover:bg-red-400 text-white font-bold py-3 rounded-xl transition-all shadow-[0_0_15px_rgba(239,68,68,0.3)] active:scale-95">
+                    نعم، متأكد
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Logic -->
+    <script>
+        // State Initialization
+        let tasks = JSON.parse(localStorage.getItem('myNotebookTasks')) || [];
+        let notes = JSON.parse(localStorage.getItem('myNotebookNotesArray')) || [];
+
+        let settings = JSON.parse(localStorage.getItem('myNotebookSettings')) || {
+            glow: true,
+            notif: false,
+            wallpaper: 'default',
+            customWallpaperData: null,
+            blurCustomWallpaper: true
+        };
+
+        let currentEditingNoteId = null;
+        let pendingConfirmCallback = null;
+
+        // Boot
+        cleanupOldArchives();
+        updateUI();
+        applySettings();
+
+        // Ensure header acts properly based on view
+        switchView('dashboard'); // enforce startup
+
+
+        // -------------------------
+        // Storage & Persistence
+        // -------------------------
+        function saveTasks() {
+            localStorage.setItem('myNotebookTasks', JSON.stringify(tasks));
+            updateUI();
+        }
+
+        function saveNotesData() {
+            localStorage.setItem('myNotebookNotesArray', JSON.stringify(notes));
+            updateUI();
+        }
+
+        // -------------------------
+        // Core: Tasks
+        // -------------------------
+        function saveTask() {
+            const titleInput = document.getElementById('newTaskTitle');
+            const timeInput = document.getElementById('newTaskTime');
+            const title = titleInput.value.trim();
+
+            if (!title) {
+                alert('الرجاء إدخال عنوان المهمة');
+                return;
+            }
+
+            const newTask = {
+                id: Date.now(),
+                title: title,
+                time: timeInput.value || 'بدون وقت',
+                completed: false,
+                archivedAt: null // store timestamp when completed
+            };
+
+            tasks.unshift(newTask);
+            saveTasks();
+
+            titleInput.value = '';
+            timeInput.value = '';
+            closeTaskModal();
+        }
+
+        function toggleTask(id, event) {
+            if (event) event.stopPropagation();
+            const task = tasks.find(t => t.id === id);
+            if (task) {
+                task.completed = !task.completed;
+                if (task.completed) {
+                    task.archivedAt = Date.now();
+                } else {
+                    task.archivedAt = null;
+                }
+                saveTasks();
+            }
+        }
+
+        function deleteTask(id, event) {
+            if (event) event.stopPropagation();
+            customConfirm('هل أنت متأكد من حذف هذه المهمة نهائياً؟', () => {
+                tasks = tasks.filter(t => t.id !== id);
+                saveTasks();
+            });
+        }
+
+        // -------------------------
+        // Core: Notes
+        // -------------------------
+        function saveCurrentNote() {
+            const titleInput = document.getElementById('currentNoteTitle');
+            const contentInput = document.getElementById('currentNoteContent');
+            const title = titleInput.value.trim();
+            const content = contentInput.value.trim();
+
+            if (!content && !title) {
+                closeNoteModal();
+                return;
+            }
+
+            if (currentEditingNoteId) {
+                const note = notes.find(n => n.id === currentEditingNoteId);
+                if (note) {
+                    note.title = title || 'بدون عنوان';
+                    note.content = content;
+                    note.updatedAt = new Date().toLocaleDateString('ar-EG');
+                }
+            } else {
+                notes.unshift({
+                    id: Date.now(),
+                    title: title || 'بدون عنوان',
+                    content: content,
+                    archived: false,
+                    archivedAt: null,
+                    updatedAt: new Date().toLocaleDateString('ar-EG')
+                });
+            }
+
+            saveNotesData();
+            closeNoteModal();
+        }
+
+        function archiveCurrentNote() {
+            if (!currentEditingNoteId) return;
+            const note = notes.find(n => n.id === currentEditingNoteId);
+            if (note) {
+                // Also save current edits before archiving
+                note.title = document.getElementById('currentNoteTitle').value.trim() || 'بدون عنوان';
+                note.content = document.getElementById('currentNoteContent').value.trim();
+                note.archived = true;
+                note.archivedAt = Date.now();
+                saveNotesData();
+                closeNoteModal();
+            }
+        }
+
+        function deleteCurrentNote() {
+            if (!currentEditingNoteId) return;
+            customConfirm('هل أنت متأكد من حذف الملاحظة؟', () => {
+                notes = notes.filter(n => n.id !== currentEditingNoteId);
+                saveNotesData();
+                closeNoteModal();
+            });
+        }
+
+        function unarchiveNote(id, event) {
+            if (event) event.stopPropagation();
+            const note = notes.find(n => n.id === id);
+            if (note) {
+                note.archived = false;
+                note.archivedAt = null;
+                saveNotesData();
+            }
+        }
+
+        // -------------------------
+        // UI Rendering Logic
+        // -------------------------
+        function updateUI() {
+            // Stats
+            const activeTasks = tasks.filter(t => !t.completed);
+            const completedTasks = tasks.filter(t => t.completed);
+
+            document.getElementById('stat-total').innerText = activeTasks.length;
+            document.getElementById('stat-completed').innerText = completedTasks.length;
+
+            // Render Dashboard Tasks (Only Uncompleted, up to 4)
+            renderTasksList('dashboard-tasks-list', activeTasks.slice(0, 4));
+
+            // Render Tasks View (Only Uncompleted)
+            renderTasksList('all-tasks-list', activeTasks);
+
+            // Render Tasks Archive 
+            renderTasksList('archived-tasks-list', completedTasks);
+
+            // Render Notes
+            const activeNotes = notes.filter(n => !n.archived);
+            const archivedNotes = notes.filter(n => n.archived);
+
+            renderNotesList('active-notes-list', activeNotes);
+            renderNotesList('archived-notes-list', archivedNotes);
+        }
+
+        function cleanupOldArchives() {
+            const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+            const now = Date.now();
+
+            let tasksChanged = false;
+            tasks = tasks.filter(t => {
+                if (t.completed && t.archivedAt && (now - t.archivedAt > ONE_DAY_MS)) {
+                    tasksChanged = true;
+                    return false;
+                }
+                return true;
+            });
+            if (tasksChanged) localStorage.setItem('myNotebookTasks', JSON.stringify(tasks));
+
+            let notesChanged = false;
+            notes = notes.filter(n => {
+                if (n.archived && n.archivedAt && (now - n.archivedAt > ONE_DAY_MS)) {
+                    notesChanged = true;
+                    return false;
+                }
+                return true;
+            });
+            if (notesChanged) localStorage.setItem('myNotebookNotesArray', JSON.stringify(notes));
+        }
+
+        function renderTasksList(containerId, tasksList) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = '';
+
+            if (tasksList.length === 0) {
+                let msg = 'لا توجد مهام حالياً.';
+                if (containerId === 'archived-tasks-list') msg = 'لا توجد مهام منجزة في الأرشيف.';
+                container.innerHTML = `<div class="text-center text-gray-500 py-8 text-sm bg-white/[0.02] rounded-2xl border border-white/[0.05]">${msg}</div>`;
+                return;
+            }
+
+            tasksList.forEach(task => {
+                const isCompleted = task.completed;
+                const taskEl = document.createElement('div');
+                taskEl.className = 'task-item glass-panel bg-gray-800/40 rounded-2xl p-4 flex items-center gap-4 group hover:-translate-y-1 hover:border-emerald-500/40 hover:bg-gray-800/80 transition-all duration-300 cursor-pointer';
+                taskEl.onclick = (e) => toggleTask(task.id, e);
+
+                let checkboxHTML = '';
+                if (isCompleted && containerId === 'archived-tasks-list') {
+                    // Inside archive: Show a distinctive green check style
+                    checkboxHTML = `
+                        <button class="checkbox-glass active border-emerald-500 bg-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.3)] w-7 h-7 rounded-lg flex flex-col items-center justify-center shrink-0 transition-all duration-300 border border-white/20">
+                            <i class="fa-solid fa-check text-[10px] text-emerald-400"></i>
+                        </button>
+                    `;
+                } else {
+                    checkboxHTML = `
+                        <button class="checkbox-glass w-7 h-7 rounded-lg flex flex-col items-center justify-center shrink-0 transition-all duration-300 border border-white/20">
+                            <i class="fa-solid fa-check text-[10px] text-transparent transition-colors duration-300"></i>
+                        </button>
+                    `;
+                }
+
+                taskEl.innerHTML = `
+                    ${checkboxHTML}
+                    <div class="flex-1 transition-all duration-300">
+                        <h3 class="${isCompleted ? 'text-gray-500 line-through' : 'text-white'} font-medium text-base mb-1 transition-colors duration-300">${task.title}</h3>
+                        <p class="text-gray-400 text-xs flex gap-2 items-center">
+                            <i class="fa-regular fa-clock ${isCompleted ? 'text-gray-500' : 'text-emerald-500/70'}"></i> ${task.time}
+                        </p>
+                    </div>
+                    <button onclick="deleteTask(${task.id}, event)" class="w-8 h-8 rounded-full flex items-center justify-center text-red-400 opacity-60 hover:opacity-100 hover:bg-red-500/10 transition-all" title="حذف نهائي">
+                        <i class="fa-solid fa-trash-can text-sm"></i>
+                    </button>
+                `;
+                container.appendChild(taskEl);
+            });
+        }
+
+        function renderNotesList(containerId, notesList) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = '';
+
+            if (notesList.length === 0) {
+                let msg = 'لا توجد ملاحظات حالياً.';
+                if (containerId === 'archived-notes-list') msg = 'لا توجد ملاحظات في الأرشيف.';
+                container.innerHTML = `<div class="col-span-full text-center text-gray-500 py-8 text-sm bg-white/[0.02] rounded-2xl border border-white/[0.05]">${msg}</div>`;
+                return;
+            }
+
+            notesList.forEach(note => {
+                const noteEl = document.createElement('div');
+                noteEl.className = 'glass-panel bg-white/[0.02] rounded-2xl p-4 flex flex-col gap-2 cursor-pointer hover:bg-white/[0.05] hover:border-emerald-500/30 transition-all group overflow-hidden relative h-32';
+                noteEl.onclick = () => openNoteModal(note.id);
+
+                const shortContent = note.content.length > 60 ? note.content.substring(0, 60) + '...' : note.content;
+
+                let archiveActionDiv = '';
+                if (note.archived) {
+                    archiveActionDiv = `
+                     <button onclick="unarchiveNote(${note.id}, event)" class="absolute top-2 left-2 w-8 h-8 bg-gray-800 rounded-lg text-emerald-400 border border-white/10 flex items-center justify-center hover:bg-emerald-500 hover:text-gray-900 transition-all" title="استعادة للنشطة">
+                        <i class="fa-solid fa-arrow-up-from-bracket text-xs"></i>
+                    </button>`;
+                }
+
+                noteEl.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-white font-bold text-sm truncate pr-2 border-r-2 border-emerald-500">${note.title}</h3>
+                        ${archiveActionDiv}
+                    </div>
+                    <p class="text-gray-400 text-xs mt-1 leading-relaxed whitespace-pre-line overflow-hidden flex-1">${shortContent}</p>
+                    <span class="text-[10px] text-gray-600 self-end mt-1">${note.updatedAt}</span>
+                `;
+                container.appendChild(noteEl);
+            });
+        }
+
+        // -------------------------
+        // Views & Subpages Flow
+        // -------------------------
+        function switchView(viewName) {
+            document.querySelectorAll('.view-section').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('block');
+            });
+
+            const target = document.getElementById(`view-${viewName}`);
+            if (target) {
+                target.classList.remove('hidden');
+                target.classList.add('block');
+                target.animate([{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 300, easing: 'ease-out' });
+            }
+
+            // Header visibility logic
+            const header = document.getElementById('main-header');
+            if (viewName === 'dashboard') {
+                header.style.display = 'flex';
+                header.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300 });
+            } else {
+                header.style.display = 'none';
+            }
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                const icon = btn.querySelector('i');
+                const indicator = btn.querySelector('.nav-indicator');
+
+                if (btn.dataset.target === viewName) {
+                    icon.classList.remove('text-gray-400');
+                    icon.classList.add('text-emerald-400', 'drop-shadow-[0_0_8px_rgba(16,185,129,0.6)]');
+                    if (indicator) indicator.classList.remove('hidden');
+                } else {
+                    icon.classList.add('text-gray-400');
+                    icon.classList.remove('text-emerald-400', 'drop-shadow-[0_0_8px_rgba(16,185,129,0.6)]');
+                    if (indicator) indicator.classList.add('hidden');
+                }
+            });
+        }
+
+        function openSubpage(subId) {
+            const page = document.getElementById(`subpage-${subId}`);
+            if (page) page.classList.add('active');
+        }
+
+        function closeSubpage(subId) {
+            const page = document.getElementById(`subpage-${subId}`);
+            if (page) page.classList.remove('active');
+        }
+
+        // -------------------------
+        // Modal Flow
+        // -------------------------
+        function openTaskModal() {
+            const modal = document.getElementById('addTaskModal');
+            const cont = document.getElementById('taskModalContent');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            requestAnimationFrame(() => {
+                modal.classList.remove('opacity-0');
+                cont.classList.remove('translate-y-full', 'sm:scale-95');
+                cont.classList.add('translate-y-0', 'sm:scale-100');
+            });
+            setTimeout(() => document.getElementById('newTaskTitle').focus(), 300);
+        }
+
+        function closeTaskModal() {
+            const modal = document.getElementById('addTaskModal');
+            const cont = document.getElementById('taskModalContent');
+            modal.classList.add('opacity-0');
+            cont.classList.remove('translate-y-0', 'sm:scale-100');
+            cont.classList.add('translate-y-full', 'sm:scale-95');
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function openNoteModal(noteId = null) {
+            currentEditingNoteId = noteId;
+            const modal = document.getElementById('addNoteModal');
+            const cont = document.getElementById('noteModalContent');
+
+            const titleInput = document.getElementById('currentNoteTitle');
+            const contentInput = document.getElementById('currentNoteContent');
+            const archBtn = document.getElementById('archive-note-btn');
+            const delBtn = document.getElementById('delete-note-btn');
+
+            if (noteId) {
+                // Edit existing
+                const note = notes.find(n => n.id === noteId);
+                titleInput.value = note.title !== 'بدون عنوان' ? note.title : '';
+                contentInput.value = note.content;
+                if (!note.archived) archBtn.classList.remove('hidden'); else archBtn.classList.add('hidden');
+                delBtn.classList.remove('hidden');
+            } else {
+                // New note
+                titleInput.value = '';
+                contentInput.value = '';
+                archBtn.classList.add('hidden');
+                delBtn.classList.add('hidden');
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            requestAnimationFrame(() => {
+                modal.classList.remove('opacity-0');
+                cont.classList.remove('translate-y-full', 'sm:scale-95');
+                cont.classList.add('translate-y-0', 'sm:scale-100');
+            });
+            setTimeout(() => contentInput.focus(), 300);
+        }
+
+        function closeNoteModal() {
+            const modal = document.getElementById('addNoteModal');
+            const cont = document.getElementById('noteModalContent');
+            modal.classList.add('opacity-0');
+            cont.classList.remove('translate-y-0', 'sm:scale-100');
+            cont.classList.add('translate-y-full', 'sm:scale-95');
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+                currentEditingNoteId = null;
+            }, 300);
+        }
+
+        function customConfirm(message, acceptCallback) {
+            document.getElementById('confirmMessageText').innerText = message;
+            pendingConfirmCallback = acceptCallback;
+            const modal = document.getElementById('confirmModal');
+            const cont = modal.querySelector('.glass-panel');
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            requestAnimationFrame(() => {
+                modal.classList.remove('opacity-0');
+                cont.classList.remove('scale-95');
+                cont.classList.add('scale-100');
+            });
+        }
+
+        function closeConfirmModal() {
+            const modal = document.getElementById('confirmModal');
+            const cont = modal.querySelector('.glass-panel');
+
+            modal.classList.add('opacity-0');
+            cont.classList.remove('scale-100');
+            cont.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+                pendingConfirmCallback = null;
+            }, 300);
+        }
+
+        document.getElementById('confirmActionBtn').onclick = () => {
+            if (pendingConfirmCallback) pendingConfirmCallback();
+            closeConfirmModal();
+        };
+
+        // -------------------------
+        // Wallpaper & Settings
+        // -------------------------
+        function applySettings() {
+            // Glow visuals
+            const orb1 = document.getElementById('glow-orb-1');
+            const orb2 = document.getElementById('glow-orb-2');
+            const glowBtn = document.getElementById('glow-toggle-btn');
+            const glowThumb = document.getElementById('glow-toggle-thumb');
+
+            if (settings.glow) {
+                if (orb1) orb1.style.opacity = '1';
+                if (orb2) orb2.style.opacity = '1';
+                glowBtn.classList.replace('bg-white/20', 'bg-emerald-500');
+                glowBtn.classList.add('shadow-[0_0_10px_rgba(16,185,129,0.3)]');
+                glowThumb.style.right = '26px';
+            } else {
+                if (orb1) orb1.style.opacity = '0';
+                if (orb2) orb2.style.opacity = '0';
+                glowBtn.classList.replace('bg-emerald-500', 'bg-white/20');
+                glowBtn.classList.remove('shadow-[0_0_10px_rgba(16,185,129,0.3)]');
+                glowThumb.style.right = '2px';
+            }
+
+            // Notif visuals
+            const notifBtn = document.getElementById('notif-toggle-btn');
+            const notifThumb = document.getElementById('notif-toggle-thumb');
+            const notifIcon = document.getElementById('notif-icon');
+
+            if (settings.notif) {
+                notifBtn.classList.replace('bg-white/20', 'bg-emerald-500');
+                notifBtn.classList.add('shadow-[0_0_10px_rgba(16,185,129,0.3)]');
+                notifThumb.style.right = '26px';
+                notifIcon.classList.replace('text-blue-400', 'text-emerald-400');
+            } else {
+                notifBtn.classList.replace('bg-emerald-500', 'bg-white/20');
+                notifBtn.classList.remove('shadow-[0_0_10px_rgba(16,185,129,0.3)]');
+                notifThumb.style.right = '2px';
+                notifIcon.classList.replace('text-emerald-400', 'text-blue-400');
+            }
+
+            // Blur Toggle Visuals
+            const blurBtn = document.getElementById('blur-toggle-btn');
+            const blurThumb = document.getElementById('blur-toggle-thumb');
+            if (settings.blurCustomWallpaper) {
+                blurBtn.classList.replace('bg-white/20', 'bg-emerald-500');
+                blurThumb.style.right = '26px';
+            } else {
+                blurBtn.classList.replace('bg-emerald-500', 'bg-white/20');
+                blurThumb.style.right = '2px';
+            }
+
+            // Real-time blur overlay logic
+            const blurOverlay = document.getElementById('bg-blur-overlay');
+            if (settings.wallpaper === 'custom') {
+                if (settings.blurCustomWallpaper) {
+                    blurOverlay.style.opacity = '1';
+                } else {
+                    blurOverlay.style.opacity = '0';
+                }
+            }
+
+            // Apply Wallpaper
+            applyBackground();
+        }
+
+        function toggleSetting(key) {
+            settings[key] = !settings[key];
+            localStorage.setItem('myNotebookSettings', JSON.stringify(settings));
+            applySettings();
+        }
+
+        function toggleBlurSetting() {
+            settings.blurCustomWallpaper = !settings.blurCustomWallpaper;
+            localStorage.setItem('myNotebookSettings', JSON.stringify(settings));
+            applySettings();
+        }
+
+        function setSystemWallpaper(type) {
+            settings.wallpaper = type;
+            localStorage.setItem('myNotebookSettings', JSON.stringify(settings));
+
+            // clear active styling from buttons
+            document.querySelectorAll('#subpage-wallpaper-settings button').forEach(b => {
+                if (b.classList.contains('border-emerald-500')) {
+                    b.classList.remove('border-emerald-500', 'shadow-[0_0_10px_rgba(16,185,129,0.3)]', 'text-emerald-400');
+                    b.classList.add('border-white/10', 'text-white/70');
+                    const icon = b.querySelector('i');
+                    if (icon) icon.remove();
+                }
+            });
+
+            // add active styling to clicked button (naively matched by onclick string)
+            const targetBtn = document.querySelector(`button[onclick="setSystemWallpaper('${type}')"]`);
+            if (targetBtn) {
+                targetBtn.classList.remove('border-white/10', 'text-white/70');
+                targetBtn.classList.add('border-emerald-500', 'shadow-[0_0_10px_rgba(16,185,129,0.3)]', 'text-emerald-400');
+                targetBtn.insertAdjacentHTML('afterbegin', '<i class="fa-solid fa-check"></i>');
+            }
+
+            applyBackground();
+        }
+
+        function handleCustomWallpaperUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                settings.wallpaper = 'custom';
+                settings.customWallpaperData = event.target.result;
+                localStorage.setItem('myNotebookSettings', JSON.stringify(settings));
+                applyBackground();
+
+                // remove checks from predefined options
+                document.querySelectorAll('#subpage-wallpaper-settings button.border-emerald-500').forEach(b => {
+                    b.classList.remove('border-emerald-500', 'shadow-[0_0_10px_rgba(16,185,129,0.3)]', 'text-emerald-400');
+                    b.classList.add('border-white/10', 'text-white/70');
+                    const icon = b.querySelector('i');
+                    if (icon) icon.remove();
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function applyBackground() {
+            const body = document.body;
+            const blurOverlay = document.getElementById('bg-blur-overlay');
+
+            // Reset image first
+            body.style.backgroundImage = 'none';
+            blurOverlay.style.opacity = '0';
+
+            if (settings.wallpaper === 'custom' && settings.customWallpaperData) {
+                body.style.backgroundImage = `url(${settings.customWallpaperData})`;
+                if (settings.blurCustomWallpaper) {
+                    blurOverlay.style.opacity = '1';
+                } else {
+                    blurOverlay.style.opacity = '0';
+                }
+            }
+            else {
+                // Predefined solid gradient colors mapping
+                const colors = {
+                    'default': '#1f2937',
+                    'abyss': 'linear-gradient(to bottom right, #0f172a, #020617)',
+                    'forest': 'linear-gradient(to bottom right, #064e3b, #022c22)',
+                    'ocean': 'linear-gradient(to bottom right, #1e3a8a, #172554)',
+                    'sunset': 'linear-gradient(to bottom right, #7f1d1d, #450a0a)',
+                    'purple': 'linear-gradient(to bottom right, #581c87, #3b0764)'
+                };
+
+                const bgCode = colors[settings.wallpaper] || colors['default'];
+                if (bgCode.startsWith('linear')) {
+                    body.style.backgroundImage = bgCode;
+                } else {
+                    body.style.backgroundColor = bgCode;
+                }
+            }
+        }
+
+        // -------------------------
+        // Utilities
+        // -------------------------
+        function clearAllData() {
+            customConfirm('هل أنت متأكد من مسح كافة المهام والملاحظات والإعدادات بصورة نهائية؟', () => {
+                tasks = [];
+                notes = [];
+                localStorage.clear();
+                window.location.reload();
+            });
+        }
+    </script>
+</body>
+
+</html>
